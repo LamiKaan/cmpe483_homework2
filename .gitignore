@@ -1,0 +1,14 @@
+./DS_Store
+./.vscode
+./.idea
+
+./class-materials
+./hw1
+./reference-implementations
+./cmpe483-2024-fall-hw2.pdf
+
+./node_modules
+
+./cache
+./artifacts
+
