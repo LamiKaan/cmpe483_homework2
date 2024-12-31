@@ -12,7 +12,7 @@ import {LibDiamond} from "./libraries/LibDiamond.sol";
 import {IDiamondCut} from "./interfaces/IDiamondCut.sol";
 import {IDiamondLoupe} from "./interfaces/IDiamondLoupe.sol";
 import {IERC173} from "./interfaces/IERC173.sol";
-import {IERC165} from "./interfaces/IERC165.sol";
+import "@openzeppelin/contracts/interfaces/IERC165.sol";
 
 // When no function exists for function called
 error FunctionNotFound(bytes4 _functionSelector);
@@ -26,12 +26,14 @@ struct DiamondArgs {
     bytes initCalldata;
 }
 
+// lkk
 contract Diamond {
     constructor(
         IDiamondCut.FacetCut[] memory _diamondCut,
         DiamondArgs memory _args
     ) payable {
         LibDiamond.setContractOwner(_args.owner);
+        LibDiamond.setInitialPaymentTokenAndLotteryNo();
         LibDiamond.diamondCut(_diamondCut, _args.init, _args.initCalldata);
 
         // Code can be added here to perform actions and set state variables.

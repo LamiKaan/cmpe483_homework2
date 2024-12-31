@@ -9,6 +9,8 @@
 
 ./node_modules
 
+./hardhat-accounts.txt
+
 node_modules
 .env
 

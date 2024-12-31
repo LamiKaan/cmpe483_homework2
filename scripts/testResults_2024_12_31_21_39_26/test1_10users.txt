@@ -1,0 +1,351 @@
+0x5FbDB2315678afecb367f032d93F642f64180aa3 - Expected payment token address
+0x5FbDB2315678afecb367f032d93F642f64180aa3 - Address emitted by function
+
+Check if "createLottery" function works correctly:
+1 - Expected lottery number
+1 - Lottery number emitted by function
+
+Check if "getCurrentLotteryNo" function works correctly:
+1 - Expected lottery number
+1 - Lottery number returned by function
+
+Check if "getLotteryInfo" function works correctly:
+1735672166 - Expected end time
+1735672166 - End time returned by function
+-------------------------------------------------------------
+10 - Expected number of issued tickets
+10 - Number of tickets returned by function
+-------------------------------------------------------------
+1 - Expected number of winners
+1 - Number of winners returned by function
+-------------------------------------------------------------
+50 - Expected minimum percentage
+50 - Minimum percentage returned by function
+-------------------------------------------------------------
+10 - Expected ticket price
+10 - Ticket price returned by function
+-------------------------------------------------------------
+
+Check if "getLotteryURL" function works correctly:
+0x24dc9634365451d94bc1f633afb8c8b88f0ef8e75df624c524fccc5d9dc324ac - Expected HTML hash
+0x24dc9634365451d94bc1f633afb8c8b88f0ef8e75df624c524fccc5d9dc324ac - HTML hash returned by function
+-------------------------------------------------------------
+www.mock-url.com - Expected URL
+www.mock-url.com - URL returned by function
+-------------------------------------------------------------
+
+Check if "getPaymentToken" function works correctly:
+0x5FbDB2315678afecb367f032d93F642f64180aa3 - Expected payment token address
+0x5FbDB2315678afecb367f032d93F642f64180aa3 - Address returned by function
+
+Check if "buyTicketTx", "getLotterySales", "getNumPurchaseTxs" and "getIthPurchasedTicketTx"  functions work correctly:
+---------------------------------------------------------------------------------
+buyTicketfx
+1 - Expected starting ticket number for the new purchase
+1 - Starting ticket number emitted by the function
+---------------------------------------------------------------------------------
+getLotterySales
+1 - Expected number of sold tickets
+1 - Number of sold tickets returned by the function
+---------------------------------------------------------------------------------
+getNumPurchaseTxs
+1 - Expected number of purchase transactions
+1 - Number of purchase transactions returned by the function
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+buyTicketfx
+2 - Expected starting ticket number for the new purchase
+2 - Starting ticket number emitted by the function
+---------------------------------------------------------------------------------
+getLotterySales
+2 - Expected number of sold tickets
+2 - Number of sold tickets returned by the function
+---------------------------------------------------------------------------------
+getNumPurchaseTxs
+2 - Expected number of purchase transactions
+2 - Number of purchase transactions returned by the function
+---------------------------------------------------------------------------------
+getIthPurchasedTicketTx - Get 1th ticket transaction: 
+Start ticket:1 Quantity:1- Expected values
+Start ticket:1 Quantity:1- Function return values
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+buyTicketfx
+3 - Expected starting ticket number for the new purchase
+3 - Starting ticket number emitted by the function
+---------------------------------------------------------------------------------
+getLotterySales
+3 - Expected number of sold tickets
+3 - Number of sold tickets returned by the function
+---------------------------------------------------------------------------------
+getNumPurchaseTxs
+3 - Expected number of purchase transactions
+3 - Number of purchase transactions returned by the function
+---------------------------------------------------------------------------------
+getIthPurchasedTicketTx - Get 2th ticket transaction: 
+Start ticket:2 Quantity:1- Expected values
+Start ticket:2 Quantity:1- Function return values
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+buyTicketfx
+4 - Expected starting ticket number for the new purchase
+4 - Starting ticket number emitted by the function
+---------------------------------------------------------------------------------
+getLotterySales
+4 - Expected number of sold tickets
+4 - Number of sold tickets returned by the function
+---------------------------------------------------------------------------------
+getNumPurchaseTxs
+4 - Expected number of purchase transactions
+4 - Number of purchase transactions returned by the function
+---------------------------------------------------------------------------------
+getIthPurchasedTicketTx - Get 3th ticket transaction: 
+Start ticket:3 Quantity:1- Expected values
+Start ticket:3 Quantity:1- Function return values
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+buyTicketfx
+5 - Expected starting ticket number for the new purchase
+5 - Starting ticket number emitted by the function
+---------------------------------------------------------------------------------
+getLotterySales
+5 - Expected number of sold tickets
+5 - Number of sold tickets returned by the function
+---------------------------------------------------------------------------------
+getNumPurchaseTxs
+5 - Expected number of purchase transactions
+5 - Number of purchase transactions returned by the function
+---------------------------------------------------------------------------------
+getIthPurchasedTicketTx - Get 4th ticket transaction: 
+Start ticket:4 Quantity:1- Expected values
+Start ticket:4 Quantity:1- Function return values
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+buyTicketfx
+6 - Expected starting ticket number for the new purchase
+6 - Starting ticket number emitted by the function
+---------------------------------------------------------------------------------
+getLotterySales
+6 - Expected number of sold tickets
+6 - Number of sold tickets returned by the function
+---------------------------------------------------------------------------------
+getNumPurchaseTxs
+6 - Expected number of purchase transactions
+6 - Number of purchase transactions returned by the function
+---------------------------------------------------------------------------------
+getIthPurchasedTicketTx - Get 5th ticket transaction: 
+Start ticket:5 Quantity:1- Expected values
+Start ticket:5 Quantity:1- Function return values
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+buyTicketfx
+7 - Expected starting ticket number for the new purchase
+7 - Starting ticket number emitted by the function
+---------------------------------------------------------------------------------
+getLotterySales
+7 - Expected number of sold tickets
+7 - Number of sold tickets returned by the function
+---------------------------------------------------------------------------------
+getNumPurchaseTxs
+7 - Expected number of purchase transactions
+7 - Number of purchase transactions returned by the function
+---------------------------------------------------------------------------------
+getIthPurchasedTicketTx - Get 6th ticket transaction: 
+Start ticket:6 Quantity:1- Expected values
+Start ticket:6 Quantity:1- Function return values
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+buyTicketfx
+8 - Expected starting ticket number for the new purchase
+8 - Starting ticket number emitted by the function
+---------------------------------------------------------------------------------
+getLotterySales
+8 - Expected number of sold tickets
+8 - Number of sold tickets returned by the function
+---------------------------------------------------------------------------------
+getNumPurchaseTxs
+8 - Expected number of purchase transactions
+8 - Number of purchase transactions returned by the function
+---------------------------------------------------------------------------------
+getIthPurchasedTicketTx - Get 7th ticket transaction: 
+Start ticket:7 Quantity:1- Expected values
+Start ticket:7 Quantity:1- Function return values
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+buyTicketfx
+9 - Expected starting ticket number for the new purchase
+9 - Starting ticket number emitted by the function
+---------------------------------------------------------------------------------
+getLotterySales
+9 - Expected number of sold tickets
+9 - Number of sold tickets returned by the function
+---------------------------------------------------------------------------------
+getNumPurchaseTxs
+9 - Expected number of purchase transactions
+9 - Number of purchase transactions returned by the function
+---------------------------------------------------------------------------------
+getIthPurchasedTicketTx - Get 8th ticket transaction: 
+Start ticket:8 Quantity:1- Expected values
+Start ticket:8 Quantity:1- Function return values
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+buyTicketfx
+10 - Expected starting ticket number for the new purchase
+10 - Starting ticket number emitted by the function
+---------------------------------------------------------------------------------
+getLotterySales
+10 - Expected number of sold tickets
+10 - Number of sold tickets returned by the function
+---------------------------------------------------------------------------------
+getNumPurchaseTxs
+10 - Expected number of purchase transactions
+10 - Number of purchase transactions returned by the function
+---------------------------------------------------------------------------------
+getIthPurchasedTicketTx - Get 9th ticket transaction: 
+Start ticket:9 Quantity:1- Expected values
+Start ticket:9 Quantity:1- Function return values
+---------------------------------------------------------------------------------
+
+Check if "revealRndNumberTx" function works correctly:
+Reveal for purchase => Start ticket no:1 Quantity:1
+Valid - Expected validity of the reveal
+Valid - Validity of the reveal emitted by transaction
+-------------------------------------------------------------
+Reveal for purchase => Start ticket no:2 Quantity:1
+Valid - Expected validity of the reveal
+Valid - Validity of the reveal emitted by transaction
+-------------------------------------------------------------
+Reveal for purchase => Start ticket no:3 Quantity:1
+Valid - Expected validity of the reveal
+Valid - Validity of the reveal emitted by transaction
+-------------------------------------------------------------
+Reveal for purchase => Start ticket no:4 Quantity:1
+Valid - Expected validity of the reveal
+Valid - Validity of the reveal emitted by transaction
+-------------------------------------------------------------
+Reveal for purchase => Start ticket no:5 Quantity:1
+Valid - Expected validity of the reveal
+Valid - Validity of the reveal emitted by transaction
+-------------------------------------------------------------
+Reveal for purchase => Start ticket no:6 Quantity:1
+Valid - Expected validity of the reveal
+Valid - Validity of the reveal emitted by transaction
+-------------------------------------------------------------
+Reveal for purchase => Start ticket no:7 Quantity:1
+Valid - Expected validity of the reveal
+Valid - Validity of the reveal emitted by transaction
+-------------------------------------------------------------
+Reveal for purchase => Start ticket no:8 Quantity:1
+Valid - Expected validity of the reveal
+Valid - Validity of the reveal emitted by transaction
+-------------------------------------------------------------
+Reveal for purchase => Start ticket no:9 Quantity:1
+Valid - Expected validity of the reveal
+Valid - Validity of the reveal emitted by transaction
+-------------------------------------------------------------
+Reveal for purchase => Start ticket no:10 Quantity:1
+Valid - Expected validity of the reveal
+Valid - Validity of the reveal emitted by transaction
+-------------------------------------------------------------
+
+Check if "getIthWinningTicket" function works correctly:
+1 < Expected Ticket Number <= 10 - Any valid ticket can be the winning ticket
+6 - Winning ticket number returned by function
+
+Check if "checkIfMyTicketWon" and "checkIfAddrTicketWon" functions work correctly:
+checkIfMyTicketWon - Buyer 1:
+false - Expected return value
+false - Return value of the function
+checkIfAddrTicketWon - Buyer 1 checks if Buyer 2's ticket won:
+false - Expected return value
+false - Return value of the function
+-------------------------------------------------------------
+-------------------------------------------------------------
+checkIfMyTicketWon - Buyer 2:
+false - Expected return value
+false - Return value of the function
+checkIfAddrTicketWon - Buyer 2 checks if Buyer 3's ticket won:
+false - Expected return value
+false - Return value of the function
+-------------------------------------------------------------
+-------------------------------------------------------------
+checkIfMyTicketWon - Buyer 3:
+false - Expected return value
+false - Return value of the function
+checkIfAddrTicketWon - Buyer 3 checks if Buyer 4's ticket won:
+false - Expected return value
+false - Return value of the function
+-------------------------------------------------------------
+-------------------------------------------------------------
+checkIfMyTicketWon - Buyer 4:
+false - Expected return value
+false - Return value of the function
+checkIfAddrTicketWon - Buyer 4 checks if Buyer 5's ticket won:
+false - Expected return value
+false - Return value of the function
+-------------------------------------------------------------
+-------------------------------------------------------------
+checkIfMyTicketWon - Buyer 5:
+false - Expected return value
+false - Return value of the function
+checkIfAddrTicketWon - Buyer 5 checks if Buyer 6's ticket won:
+true - Expected return value
+true - Return value of the function
+-------------------------------------------------------------
+-------------------------------------------------------------
+checkIfMyTicketWon - Buyer 6:
+true - Expected return value
+true - Return value of the function
+checkIfAddrTicketWon - Buyer 6 checks if Buyer 7's ticket won:
+false - Expected return value
+false - Return value of the function
+-------------------------------------------------------------
+-------------------------------------------------------------
+checkIfMyTicketWon - Buyer 7:
+false - Expected return value
+false - Return value of the function
+checkIfAddrTicketWon - Buyer 7 checks if Buyer 8's ticket won:
+false - Expected return value
+false - Return value of the function
+-------------------------------------------------------------
+-------------------------------------------------------------
+checkIfMyTicketWon - Buyer 8:
+false - Expected return value
+false - Return value of the function
+checkIfAddrTicketWon - Buyer 8 checks if Buyer 9's ticket won:
+false - Expected return value
+false - Return value of the function
+-------------------------------------------------------------
+-------------------------------------------------------------
+checkIfMyTicketWon - Buyer 9:
+false - Expected return value
+false - Return value of the function
+checkIfAddrTicketWon - Buyer 9 checks if Buyer 10's ticket won:
+false - Expected return value
+false - Return value of the function
+-------------------------------------------------------------
+-------------------------------------------------------------
+checkIfMyTicketWon - Buyer 10:
+false - Expected return value
+false - Return value of the function
+checkIfAddrTicketWon - Buyer 10 checks if Buyer 1's ticket won:
+false - Expected return value
+false - Return value of the function
+-------------------------------------------------------------
+
+Check if "withdrawTicketRefund" function works correctly:
+BEFORE REFUND:
+Diamond contract balance: 100
+Buyer 6 (winner) balance: 990
+AFTER REFUND:
+Diamond contract balance: 10
+Buyer 6 (winner) balance: 1080
+
+Check if "withdrawTicketProceeds" function works correctly:
+BEFORE PROCEEDS:
+Diamond contract balance: 10
+Owner balance: 0
+AFTER PROCEEDS:
+Diamond contract balance: 0
+Owner balance: 10
+

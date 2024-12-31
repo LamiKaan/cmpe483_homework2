@@ -13,12 +13,18 @@ module.exports = {
     },
   },
   networks: {
+    // defaultNetwork: "hardhat",
     hardhat: {
+      // url: "http://127.0.0.1:8545",
       accounts: {
-        count: 401, // Number of accounts to generate
+        count: 11, // Number of accounts to generate
       },
       allowBlocksWithSameTimestamp: true,
     },
+    // sepolia: {
+    //   url: "https://sepolia.infura.io/v3/<key>",
+    //   accounts: [privateKey1, privateKey2]
+    // }
   },
   paths: {
     sources: "./contracts", // Ensure this points to your contracts folder
