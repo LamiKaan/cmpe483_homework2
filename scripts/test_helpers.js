@@ -4,9 +4,36 @@ const path = require("path");
 // const exp = require("constants");
 // const { boolean } = require("hardhat/internal/core/params/argumentTypes");
 const paymentTokenPath = "./artifacts/contracts/LotteryToken.sol/LotteryToken.json";
+const lottertTokenPath = paymentTokenPath;
+const diamondPath = "./artifacts/contracts/Diamond.sol/Diamond.json";
+const ownershipFacetPath = "./artifacts/contracts/facets/OwnershipFacet.sol/OwnershipFacet.json";
+const userFacetPath = "./artifacts/contracts/facets/UserFacet.sol/UserFacet.json";
 
 async function getPaymentTokenABI() {
     return JSON.parse(await fs.readFile(paymentTokenPath, { encoding: 'utf8' })).abi;
+}
+
+async function getAbisAndBytecodes() {
+    const abis = new Map();
+    const bytecodes = new Map();
+
+    const lotteryToken = JSON.parse(await fs.readFile(lottertTokenPath, { encoding: 'utf8' }));
+    abis.set('LotteryToken', lotteryToken.abi);
+    bytecodes.set('LotteryToken', lotteryToken.bytecode);
+
+    const diamond = JSON.parse(await fs.readFile(diamondPath, { encoding: 'utf8' }));
+    abis.set('Diamond', diamond.abi);
+    bytecodes.set('Diamond', diamond.bytecode);
+
+    const ownershipFacet = JSON.parse(await fs.readFile(ownershipFacetPath, { encoding: 'utf8' }));
+    abis.set('OwnershipFacet', ownershipFacet.abi);
+    bytecodes.set('OwnershipFacet', ownershipFacet.bytecode);
+
+    const userFacet = JSON.parse(await fs.readFile(userFacetPath, { encoding: 'utf8' }));
+    abis.set('UserFacet', userFacet.abi);
+    bytecodes.set('UserFacet', userFacet.bytecode);
+
+    return [abis, bytecodes];
 }
 
 async function createTestResultsDirectory() {
@@ -142,6 +169,7 @@ class GasUsages {
 
 module.exports = {
     getPaymentTokenABI,
+    getAbisAndBytecodes,
     createTestResultsDirectory,
     Purchase,
     Lottery,

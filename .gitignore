@@ -6,6 +6,7 @@
 ./hw1
 ./reference-implementations
 ./cmpe483-2024-fall-hw2.pdf
+./frontend/node_modules
 
 ./node_modules
 

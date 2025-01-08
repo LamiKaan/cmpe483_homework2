@@ -80,10 +80,11 @@ async function deployDiamond() {
 async function main() {
 
     const [owner, facetFactories, diamondAdress, lotteryTokenAddress] = await deployDiamond();
-    console.log("Owner address: ", await owner.signer.getAddress());
-    console.log("Facets and factories: ", facetFactories);
-    console.log("Diamond address: ", diamondAdress);
-    console.log("LotteryToken address: ", lotteryTokenAddress);
+    // console.log("Owner address: ", await owner.signer.getAddress());
+    // console.log("Facets and factories: ", facetFactories);
+    // console.log("Diamond address: ", diamondAdress);
+    // console.log("LotteryToken address: ", lotteryTokenAddress);
+    console.log("Diamond deployment complete.");
 }
 
 

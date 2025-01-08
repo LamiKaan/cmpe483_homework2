@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Diamond UI</title>
+    <style>
+      /* Basic styling to create four regions */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      .region {
+        border: 1px solid black;
+        margin: 10px;
+        padding: 10px;
+      }
+
+      .region h2 {
+        margin-top: 0;
+      }
+
+      .region div {
+        border-bottom: 1px solid #ccc; /* Light gray line */
+        margin-bottom: 10px; /* Space between divs */
+        padding-bottom: 10px; /* Padding below the line for better spacing */
+      }
+
+      /* Optional: Remove the border from the last child */
+      .region div:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Diamond Lottery Interface</h1>
+    <p id="diamondAddress"></p>
+    <p id="lotteryTokenAddress"></p>
+
+    <!-- General Section -->
+    <div class="region" id="general">
+      <h2>General</h2>
+      <div>
+        <button id="getBlockTimestamp">Get Block Timestamp</button>
+        <p id="getBlockTimestampOutput"></p>
+      </div>
+      <div>
+        <button id="getSigner">Get Current Signer</button>
+        <p id="getSignerOutput"></p>
+      </div>
+    </div>
+
+    <!-- LotteryToken Section -->
+    <div class="region" id="lotteryToken">
+      <h2>LotteryToken</h2>
+      <div>
+        <p>You can buy 1000 lottery tokens per 1 gwei.</p>
+        <label for="gweiAmount">Amount of Gwei:</label>
+        <input type="number" id="gweiAmount" />
+        <br />
+        <button id="buyTokens">Buy Tokens</button>
+        <p id="buyTokensOutput"></p>
+      </div>
+      <div>
+        <button id="getSignerBalance">Get Signer Balance</button>
+        <p id="getSignerBalanceOutput"></p>
+      </div>
+      <div>
+        <label for="accountAddress">Account address:</label>
+        <input type="text" id="accountAddress" />
+        <br />
+        <button id="getAccountBalance">Get Balance</button>
+        <p id="getAccountBalanceOutput"></p>
+      </div>
+    </div>
+
+    <!-- UserFacet Section -->
+    <div class="region" id="userFacet">
+      <h2>UserFacet</h2>
+      <div>
+        <button id="getCurrentLotteryNo">Get current lottery number</button>
+        <p id="getCurrentLotteryNoOutput"></p>
+      </div>
+      <div>
+        <label data-region="getLotteryInfo" for="lotteryNo"
+          >Lottery number:</label
+        >
+        <input type="number" id="lotteryNo" data-region="getLotteryInfo" />
+        <br />
+        <button id="getLotteryInfo">Get lottery info</button>
+        <p id="getLotteryInfoOutput"></p>
+      </div>
+      <div>
+        <label data-region="getPaymentToken" for="lotteryNo"
+          >Lottery number:</label
+        >
+        <input type="number" id="lotteryNo" data-region="getPaymentToken" />
+        <br />
+        <button id="getPaymentToken">Get payment token</button>
+        <p id="getPaymentTokenOutput"></p>
+      </div>
+    </div>
+
+    <!-- OwnershipFacet Section -->
+    <div class="region" id="ownershipFacet">
+      <h2>OwnershipFacet</h2>
+      <div>
+        <label for="paymentTokenAddress">Payment token address:</label>
+        <input type="text" id="paymentTokenAddress" />
+        <br />
+        <button id="setPaymentToken">Set Payment Token</button>
+        <p id="setPaymentTokenOutput"></p>
+      </div>
+      <div>
+        <label for="endTime">End Time:</label>
+        <input type="number" id="endTime" />
+        <br />
+        <label for="ticketsIssued">Number of Tickets:</label>
+        <input type="number" id="ticketsIssued" />
+        <br />
+        <label for="numberOfWinners">Number of Winners:</label>
+        <input type="number" id="numberOfWinners" />
+        <br />
+        <label for="minPercentage">Minimum Percentage:</label>
+        <input type="number" id="minPercentage" />
+        <br />
+        <label for="ticketPrice">Ticket Price:</label>
+        <input type="number" id="ticketPrice" />
+        <br />
+        <label for="htmlHash">HTML Hash:</label>
+        <input type="text" id="htmlHash" />
+        <br />
+        <label for="url">URL:</label>
+        <input type="text" id="url" />
+        <br />
+        <button id="createLottery">Create Lottery</button>
+        <p id="createLotteryOutput"></p>
+      </div>
+    </div>
+
+    <script src="bundle.js" type="module"></script>
+  </body>
+</html>
