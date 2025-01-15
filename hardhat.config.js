@@ -49,13 +49,22 @@ module.exports = {
         auto: true,
         interval: 5000,
       }
+    },
+    sepolia: {
+      url: `https://sepolia.infura.io/v3/${process.env.SEPOLIA_API_KEY}`,
+      accounts: [process.env.METAMASK_PRIVATE_KEY1,
+      process.env.METAMASK_PRIVATE_KEY2,
+      process.env.METAMASK_PRIVATE_KEY3,
+      process.env.METAMASK_PRIVATE_KEY4,
+      process.env.METAMASK_PRIVATE_KEY5,
+      process.env.METAMASK_PRIVATE_KEY6,],
+      chainId: 11155111,
     }
-    // sepolia: {
-    //   url: "https://sepolia.infura.io/v3/<key>",
-    //   accounts: [privateKey1, privateKey2]
-    // }
   },
   paths: {
     sources: "./contracts", // Ensure this points to your contracts folder
+  },
+  etherscan: {
+    apiKey: process.env.ETHERSCAN_API_KEY,
   },
 };

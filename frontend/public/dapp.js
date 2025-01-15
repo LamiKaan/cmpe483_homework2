@@ -153,6 +153,82 @@ async function getAccountBalance() {
     }
 }
 
+async function approve() {
+    try {
+        signer = await provider.getSigner();
+
+        const spenderAddress = document.querySelector('#spenderAddress[data-region="approve"]').value;
+        const approveAmount = document.querySelector('#approveAmount[data-region="approve"]').value;
+
+        const success = await lotteryToken.connect(signer).approve(spenderAddress, approveAmount);
+        // const tx = await lotteryToken.connect(signer).approve(spenderAddress, approveAmount);
+        // const receipt = await tx.wait();
+
+        console.log("Success: \n", success);
+        // console.log(`TX:\n${tx}`);
+        // console.log(`RECEIPT:\n${receipt}`);
+
+        if (success) {
+            document.getElementById("approveOutput").innerHTML = `<b>Done</b>`;
+        } else {
+            console.log("Success: \n", success);
+        }
+
+        // if (receipt !== undefined && receipt !== null) {
+        //     document.getElementById("approveOutput").innerHTML = `<b>Done</b>`;
+        // }
+        // else {
+        //     console.log(`TX:\n${tx}`);
+        //     console.log(`RECEIPT:\n${receipt}`);
+        // }
+
+
+    } catch (error) {
+        console.log(error);
+        console.error(error.info);
+        document.getElementById("approveOutput").innerText = error.shortMesssage;
+    }
+
+}
+
+async function checkAllowance() {
+    try {
+        signer = await provider.getSigner();
+
+        const ownerAddress = document.querySelector('#ownerAddress[data-region="allowance"]').value;
+        const spenderAddress = document.querySelector('#spenderAddress[data-region="allowance"]').value;
+
+        console.log("Owner Address: ", ownerAddress);
+        console.log("Spender Address: ", spenderAddress);
+
+        const allowanceAmount = await lotteryToken.connect(signer).allowance(ownerAddress, spenderAddress);
+        // const tx = await lotteryToken.connect(signer).allowance(ownerAddress, spenderAddress);
+        // const receipt = await tx.wait();
+
+        console.log("Allowance Amount: \n", allowanceAmount);
+
+        if (allowanceAmount !== undefined && allowanceAmount !== null) {
+            document.getElementById("allowanceOutput").innerHTML = `<b>Allowance amount:</b> ${allowanceAmount}`;
+        } else {
+            console.log("Allowance Amount: \n", allowanceAmount);
+        }
+
+        // if (receipt !== undefined && receipt !== null) {
+        //     document.getElementById("allowanceOutput").innerHTML = `<b>Done</b>`;
+        // }
+        // else {
+        //     console.log(`TX:\n${tx}`);
+        //     console.log(`RECEIPT:\n${receipt}`);
+        // }
+
+    } catch (error) {
+        console.log(error);
+        console.error(error.info);
+        document.getElementById("allowanceOutput").innerText = error.shortMesssage;
+    }
+
+}
+
 // USER FACET DIV FUNCTIONS
 
 async function getCurrentLotteryNo() {
@@ -185,6 +261,25 @@ async function getLotteryInfo() {
     }
 }
 
+async function getRevealTime() {
+    try {
+        signer = await provider.getSigner();
+
+        const lotteryNumber = document.querySelector('#lotteryNo[data-region="getRevealTime"]').value;
+
+        const revealTime = await userFacet.connect(signer).getRevealTime(lotteryNumber);
+
+        document.getElementById("getRevealTimeOutput").innerHTML = `<b>Reveal time:</b> ${revealTime}`;
+
+    } catch (error) {
+
+        console.log(`CATCHED ERROR:\n${error}`);
+
+        console.error(error.info);
+        document.getElementById("getRevealTimeOutput").innerText = error.shortMesssage;
+    }
+}
+
 async function getPaymentToken() {
     try {
         signer = await provider.getSigner();
@@ -197,6 +292,234 @@ async function getPaymentToken() {
     } catch (error) {
         console.error(error.info);
         document.getElementById("getPaymentTokenOutput").innerText = error.shortMesssage;
+    }
+}
+
+async function getLotteryURL() {
+    try {
+        signer = await provider.getSigner();
+
+        const lotteryNumber = document.querySelector('#lotteryNo[data-region="getLotteryURL"]').value;
+
+        const lotteryURL = await userFacet.connect(signer).getLotteryURL(lotteryNumber);
+        const [htmlhash, url] = lotteryURL;
+
+        document.getElementById("getLotteryURLOutput1").innerHTML = `<b>HTML hash:</b> ${htmlhash}`;
+        document.getElementById("getLotteryURLOutput2").innerHTML = `<b>URL:</b> ${url}`;
+    } catch (error) {
+        console.error(error.info);
+        document.getElementById("getLotteryURLOutput1").innerText = error.shortMesssage;
+    }
+}
+
+async function buyTicket() {
+    try {
+        signer = await provider.getSigner();
+
+        const lotteryNumber = document.querySelector('#lotteryNo[data-region="buyTicketTx"]').value;
+        const quantity = document.querySelector('#quantity[data-region="buyTicketTx"]').value;
+        const hashRandomNumber = document.querySelector('#randomNumberHash[data-region="buyTicketTx"]').value;
+
+        const tx = await userFacet.connect(signer).buyTicketTx(lotteryNumber, quantity, hashRandomNumber);
+
+        console.log("TX: ", tx);
+
+        const receipt = await tx.wait();
+
+        console.log("RECEIPT: ", receipt);
+
+        const events = await diamond.connect(provider).queryFilter(userFacet.filters.NewPurchaseMade, receipt.blockNumber, receipt.blockNumber);
+
+        console.log("EVENTS: ", events);
+
+        const startTicketNo = Number(events[0].args[0]);
+
+        document.getElementById("buyTicketTxOutput").innerHTML = `<b>Start ticket no:</b> ${startTicketNo}`;
+
+    } catch (error) {
+        console.log("ERROR: \n", error);
+        console.error(error.info);
+        document.getElementById("buyTicketTxOutput").innerText = error.shortMesssage;
+    }
+}
+
+async function getLotterySales() {
+    try {
+        signer = await provider.getSigner();
+
+        const lotteryNumber = document.querySelector('#lotteryNo[data-region="getLotterySales"]').value;
+
+        const lotterySales = await userFacet.connect(signer).getLotterySales(lotteryNumber);
+
+        document.getElementById("getLotterySalesOutput").innerHTML = `<b>Number of sold tickets:</b> ${lotterySales}`;
+
+    } catch (error) {
+
+        console.log(`CATCHED ERROR:\n${error}`);
+
+        console.error(error.info);
+        document.getElementById("getLotterySalesOutput").innerText = error.shortMesssage;
+    }
+}
+
+async function getNumPurchaseTxs() {
+    try {
+        signer = await provider.getSigner();
+
+        const lotteryNumber = document.querySelector('#lotteryNo[data-region="getNumPurchaseTxs"]').value;
+
+        const purchasesMade = await userFacet.connect(signer).getNumPurchaseTxs(lotteryNumber);
+
+        document.getElementById("getNumPurchaseTxsOutput").innerHTML = `<b>Number of purchase transactions:</b> ${purchasesMade}`;
+
+    } catch (error) {
+
+        console.log(`CATCHED ERROR:\n${error}`);
+
+        console.error(error.info);
+        document.getElementById("getNumPurchaseTxsOutput").innerText = error.shortMesssage;
+    }
+}
+
+async function getIthPurchasedTicketTx() {
+    try {
+        signer = await provider.getSigner();
+
+        const i = document.querySelector('#i[data-region="getIthPurchasedTicketTx"]').value;
+        const lotteryNumber = document.querySelector('#lotteryNo[data-region="getIthPurchasedTicketTx"]').value;
+
+        const purchase = await userFacet.connect(signer).getIthPurchasedTicketTx(i, lotteryNumber);
+        const [startTicketNo, quantity] = purchase;
+
+        document.getElementById("getIthPurchasedTicketTxOutput1").innerHTML = `<b>Start ticket no:</b> ${startTicketNo}`;
+        document.getElementById("getIthPurchasedTicketTxOutput2").innerHTML = `<b>Quantity:</b> ${quantity}`;
+    } catch (error) {
+        console.log(`CATCHED ERROR:\n${error}`);
+
+        console.error(error.info);
+        document.getElementById("getIthPurchasedTicketTxOutput1").innerText = error.shortMesssage;
+    }
+}
+
+async function revealRandomNumber() {
+    try {
+        signer = await provider.getSigner();
+
+        const lotteryNumber = document.querySelector('#lotteryNo[data-region="revealRndNumberTx"]').value;
+        const startTicketNumber = document.querySelector('#startTicketNo[data-region="revealRndNumberTx"]').value;
+        const quantity = document.querySelector('#quantity[data-region="revealRndNumberTx"]').value;
+        const randomNumberText = document.querySelector('#randomNumber[data-region="revealRndNumberTx"]').value;
+        const randomNumber = ethers.toBigInt(randomNumberText);
+
+        const tx = await userFacet.connect(signer).revealRndNumberTx(lotteryNumber, startTicketNumber, quantity, randomNumber);
+
+        console.log("TX: ", tx);
+
+        const receipt = await tx.wait();
+
+        console.log("RECEIPT: ", receipt);
+
+        const isValid = (receipt.logs[0].fragment.name === "ValidReveal");
+
+        const response = `${isValid === true ? "Valid - Successfully revealed the random number and obtained a chance at winning." : "Invalid - Provided random number doesn't produce the correct hash. Winning chance is lost, and there will be no refund."}`
+
+        document.getElementById("revealRndNumberTxOutput").innerHTML = `<b>Reveal:</b> ${response}`;
+
+    } catch (error) {
+
+        console.log(`CATCHED ERROR:\n${error}`);
+
+        console.error(error.info);
+        document.getElementById("revealRndNumberTxOutput").innerText = error.shortMesssage;
+    }
+}
+
+async function getIthWinningTicket() {
+    try {
+        signer = await provider.getSigner();
+
+        const lotteryNumber = document.querySelector('#lotteryNo[data-region="getIthWinningTicket"]').value;
+        const i = document.querySelector('#i[data-region="getIthWinningTicket"]').value;
+
+        const winningTicketNo = await userFacet.connect(signer).getIthWinningTicket(lotteryNumber, i);
+
+        document.getElementById("getIthWinningTicketOutput").innerHTML = `<b>${i}th winning ticket no:</b> ${winningTicketNo}`;
+    } catch (error) {
+        console.log(`CATCHED ERROR:\n${error}`);
+
+        console.error(error.info);
+        document.getElementById("getIthWinningTicketOutput").innerText = error.shortMesssage;
+    }
+}
+
+async function checkIfMyTicketWon() {
+    try {
+        signer = await provider.getSigner();
+
+        const lotteryNumber = document.querySelector('#lotteryNo[data-region="checkIfMyTicketWon"]').value;
+        const ticketNumber = document.querySelector('#ticketNo[data-region="checkIfMyTicketWon"]').value;
+
+        const won = await userFacet.connect(signer).checkIfMyTicketWon(lotteryNumber, ticketNumber);
+
+        document.getElementById("checkIfMyTicketWonOutput").innerHTML = `<b>Ticket(${ticketNumber}) status:</b> ${won === true ? "Won" : "Didn't win"}`;
+
+    } catch (error) {
+        console.log(`CATCHED ERROR:\n${error}`);
+
+        console.error(error.info);
+        document.getElementById("checkIfMyTicketWonOutput").innerText = error.shortMesssage;
+    }
+}
+
+async function checkIfAddrTicketWon() {
+    try {
+        signer = await provider.getSigner();
+
+        const address = document.querySelector('#address[data-region="checkIfAddrTicketWon"]').value;
+        const lotteryNumber = document.querySelector('#lotteryNo[data-region="checkIfAddrTicketWon"]').value;
+        const ticketNumber = document.querySelector('#ticketNo[data-region="checkIfAddrTicketWon"]').value;
+
+        const won = await userFacet.connect(signer).checkIfAddrTicketWon(address, lotteryNumber, ticketNumber);
+
+        document.getElementById("checkIfAddrTicketWonOutput").innerHTML = `<b>Ticket(${ticketNumber}) status:</b> ${won === true ? "Won" : "Didn't win"}`;
+
+    } catch (error) {
+        console.log(`CATCHED ERROR:\n${error}`);
+
+        console.error(error.info);
+        document.getElementById("checkIfAddrTicketWonOutput").innerText = error.shortMesssage;
+    }
+}
+
+async function withdrawTicketRefund() {
+    try {
+        signer = await provider.getSigner();
+
+        const lotteryNumber = document.querySelector('#lotteryNo[data-region="withdrawTicketRefund"]').value;
+        const startTicketNumber = document.querySelector('#startTicketNo[data-region="withdrawTicketRefund"]').value;
+
+        const tx = await userFacet.connect(signer).withdrawTicketRefund(lotteryNumber, startTicketNumber);
+
+        console.log("TX: ", tx);
+
+        const receipt = await tx.wait();
+
+        console.log("RECEIPT: ", receipt);
+
+        const events = await diamond.connect(provider).queryFilter(userFacet.filters.PaymentMade, receipt.blockNumber, receipt.blockNumber);
+
+        console.log("EVENTS: ", events);
+
+        const payedAmount = Number(events[0].args[0]);
+        const remainingRefund = Number(events[0].args[1]);
+
+        document.getElementById("withdrawTicketRefundOutput").innerHTML = `Payment made.<br /><b>Payed amount:</b> ${payedAmount} LT<br /><b>Remaining refund:</b> ${remainingRefund} LT`;
+
+    } catch (error) {
+        console.log(`CATCHED ERROR:\n${error}`);
+
+        console.error(error.info);
+        document.getElementById("withdrawTicketRefundOutput").innerText = error.shortMesssage;
     }
 }
 
@@ -246,12 +569,14 @@ async function createLottery() {
 
         const tx = await ownershipFacet.connect(signer).createLottery(endTime, ticketsIssued, numberOfWinners, minPercentage, ticketPrice, htmlHash, url);
         const receipt = await tx.wait();
-        const lotteryNumber = receipt.events[0].args.newLotteryNumber;
+
+        const events = await diamond.connect(provider).queryFilter(ownershipFacet.filters.NewLotteryCreated, receipt.blockNumber, receipt.blockNumber);
+        const lotteryNumber = events[0].args[0];
 
         document.getElementById("createLotteryOutput").innerText = `Lottery Created: ${lotteryNumber}`;
     } catch (error) {
 
-        console.log(error);
+        console.log(`CATCHED ERROR:\n${error}`);
 
         const errorInterface = new ethers.Interface([
             "error NotContractOwner(address _user, address _contractOwner)"
@@ -260,11 +585,85 @@ async function createLottery() {
         const decodedError = errorInterface.parseError(error.data);
 
         if (decodedError.name !== undefined) {
-            document.getElementById("setPaymentTokenOutput").innerText = decodedError.name;
+            document.getElementById("createLotteryOutput").innerText = decodedError.name;
         } else {
             console.error(error);
-            document.getElementById("setPaymentTokenOutput").innerText = "Error";
+            document.getElementById("createLotteryOutput").innerText = "Error";
         }
+    }
+}
+
+async function finalizeLottery() {
+    try {
+        signer = await provider.getSigner();
+
+        const lotteryNumber = document.querySelector('#lotteryNo[data-region="finalizeLottery"]').value;
+
+        const tx = await ownershipFacet.connect(signer).finalizeLottery(lotteryNumber);
+
+        console.log("TX: ", tx);
+
+        const receipt = await tx.wait();
+
+        console.log("RECEIPT: ", receipt);
+
+        const isCancelled = (receipt.logs[0].fragment.name === "Cancelled");
+
+        const response = `${isCancelled === true ? "Cancelled" : "Finalized successfully"}`;
+
+        document.getElementById("finalizeLotteryOutput").innerHTML = `<b>Lottery status:</b> ${response}`;
+    } catch (error) {
+
+        console.log(`CATCHED ERROR:\n${error}`);
+
+        const errorInterface = new ethers.Interface([
+            "error NotContractOwner(address _user, address _contractOwner)"
+        ]);
+
+        const decodedError = errorInterface.parseError(error.data);
+
+        if (decodedError.name !== undefined) {
+            document.getElementById("finalizeLotteryOutput").innerText = decodedError.name;
+        } else {
+            console.error(error);
+            document.getElementById("finalizeLotteryOutput").innerText = "Error";
+        }
+
+    }
+}
+
+async function withdrawTicketProceeds() {
+    try {
+        signer = await provider.getSigner();
+
+        const lotteryNumber = document.querySelector('#lotteryNo[data-region="withdrawTicketProceeds"]').value;
+
+        const tx = await ownershipFacet.connect(signer).withdrawTicketProceeds(lotteryNumber);
+
+        console.log("TX: ", tx);
+
+        const receipt = await tx.wait();
+
+        console.log("RECEIPT: ", receipt);
+
+        document.getElementById("withdrawTicketProceedsOutput").innerHTML = `<b>Done</b>`;
+    } catch (error) {
+
+        console.log(`CATCHED ERROR:\n${error}`);
+
+        const errorInterface = new ethers.Interface([
+            "error NotContractOwner(address _user, address _contractOwner)"
+        ]);
+
+        const decodedError = errorInterface.parseError(error.data);
+
+        if (decodedError.name !== undefined) {
+            document.getElementById("withdrawTicketProceedsOutput").innerText = decodedError.name;
+        } else {
+            console.error(error);
+            document.getElementById("withdrawTicketProceedsOutput").innerText = "Error";
+        }
+
     }
 }
 
@@ -281,15 +680,31 @@ document.getElementById("getSigner").addEventListener("click", getCurrentSigner)
 document.getElementById("buyTokens").addEventListener("click", buyTokens);
 document.getElementById("getSignerBalance").addEventListener("click", getSignerBalance);
 document.getElementById("getAccountBalance").addEventListener("click", getAccountBalance);
+document.getElementById("approve").addEventListener("click", approve);
+document.getElementById("allowance").addEventListener("click", checkAllowance);
+
 
 // USER SECTION EVENT LISTENERS
 document.getElementById("getCurrentLotteryNo").addEventListener("click", getCurrentLotteryNo);
 document.getElementById("getLotteryInfo").addEventListener("click", getLotteryInfo);
+document.getElementById("getRevealTime").addEventListener("click", getRevealTime);
 document.getElementById("getPaymentToken").addEventListener("click", getPaymentToken);
+document.getElementById("getLotteryURL").addEventListener("click", getLotteryURL);
+document.getElementById("buyTicketTx").addEventListener("click", buyTicket);
+document.getElementById("getLotterySales").addEventListener("click", getLotterySales);
+document.getElementById("getNumPurchaseTxs").addEventListener("click", getNumPurchaseTxs);
+document.getElementById("getIthPurchasedTicketTx").addEventListener("click", getIthPurchasedTicketTx);
+document.getElementById("revealRndNumberTx").addEventListener("click", revealRandomNumber);
+document.getElementById("getIthWinningTicket").addEventListener("click", getIthWinningTicket);
+document.getElementById("checkIfMyTicketWon").addEventListener("click", checkIfMyTicketWon);
+document.getElementById("checkIfAddrTicketWon").addEventListener("click", checkIfAddrTicketWon);
+document.getElementById("withdrawTicketRefund").addEventListener("click", withdrawTicketRefund);
 
 // OWNERSHIP SECTION EVENT LISTENERS
 document.getElementById("setPaymentToken").addEventListener("click", setPaymentToken);
 document.getElementById("createLottery").addEventListener("click", createLottery);
+document.getElementById("finalizeLottery").addEventListener("click", finalizeLottery);
+document.getElementById("withdrawTicketProceeds").addEventListener("click", withdrawTicketProceeds);
 
 // 
 // document.getElementById("createLottery").addEventListener("click", createLottery);

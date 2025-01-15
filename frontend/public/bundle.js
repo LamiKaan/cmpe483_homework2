@@ -22773,6 +22773,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ethers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ethers */ "./node_modules/ethers/lib.esm/contract/factory.js");
 /* harmony import */ var ethers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ethers */ "./node_modules/ethers/lib.esm/abi/interface.js");
 /* harmony import */ var ethers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ethers */ "./node_modules/ethers/lib.esm/utils/units.js");
+/* harmony import */ var ethers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ethers */ "./node_modules/ethers/lib.esm/utils/maths.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -23059,7 +23060,7 @@ function _getSignerBalance() {
 }
 function getAccountBalance() {
   return _getAccountBalance.apply(this, arguments);
-} // USER FACET DIV FUNCTIONS
+}
 function _getAccountBalance() {
   _getAccountBalance = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee8() {
     var accountAddress, balance;
@@ -23092,12 +23093,12 @@ function _getAccountBalance() {
   }));
   return _getAccountBalance.apply(this, arguments);
 }
-function getCurrentLotteryNo() {
-  return _getCurrentLotteryNo.apply(this, arguments);
+function approve() {
+  return _approve.apply(this, arguments);
 }
-function _getCurrentLotteryNo() {
-  _getCurrentLotteryNo = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
-    var lotteryNumber;
+function _approve() {
+  _approve = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
+    var spenderAddress, approveAmount, success;
     return _regeneratorRuntime().wrap(function _callee9$(_context9) {
       while (1) switch (_context9.prev = _context9.next) {
         case 0:
@@ -23106,32 +23107,54 @@ function _getCurrentLotteryNo() {
           return provider.getSigner();
         case 3:
           signer = _context9.sent;
-          _context9.next = 6;
-          return userFacet.connect(signer).getCurrentLotteryNo();
-        case 6:
-          lotteryNumber = _context9.sent;
-          document.getElementById("getCurrentLotteryNoOutput").innerHTML = "<b>Current Lottery Number:</b> ".concat(lotteryNumber);
-          _context9.next = 14;
+          spenderAddress = document.querySelector('#spenderAddress[data-region="approve"]').value;
+          approveAmount = document.querySelector('#approveAmount[data-region="approve"]').value;
+          _context9.next = 8;
+          return lotteryToken.connect(signer).approve(spenderAddress, approveAmount);
+        case 8:
+          success = _context9.sent;
+          // const tx = await lotteryToken.connect(signer).approve(spenderAddress, approveAmount);
+          // const receipt = await tx.wait();
+
+          console.log("Success: \n", success);
+          // console.log(`TX:\n${tx}`);
+          // console.log(`RECEIPT:\n${receipt}`);
+
+          if (success) {
+            document.getElementById("approveOutput").innerHTML = "<b>Done</b>";
+          } else {
+            console.log("Success: \n", success);
+          }
+
+          // if (receipt !== undefined && receipt !== null) {
+          //     document.getElementById("approveOutput").innerHTML = `<b>Done</b>`;
+          // }
+          // else {
+          //     console.log(`TX:\n${tx}`);
+          //     console.log(`RECEIPT:\n${receipt}`);
+          // }
+          _context9.next = 18;
           break;
-        case 10:
-          _context9.prev = 10;
+        case 13:
+          _context9.prev = 13;
           _context9.t0 = _context9["catch"](0);
+          console.log(_context9.t0);
           console.error(_context9.t0.info);
-          document.getElementById("getCurrentLotteryNoOutput").innerText = _context9.t0.shortMesssage;
-        case 14:
+          document.getElementById("approveOutput").innerText = _context9.t0.shortMesssage;
+        case 18:
         case "end":
           return _context9.stop();
       }
-    }, _callee9, null, [[0, 10]]);
+    }, _callee9, null, [[0, 13]]);
   }));
-  return _getCurrentLotteryNo.apply(this, arguments);
+  return _approve.apply(this, arguments);
 }
-function getLotteryInfo() {
-  return _getLotteryInfo.apply(this, arguments);
-}
-function _getLotteryInfo() {
-  _getLotteryInfo = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee10() {
-    var lotteryNumber, currentLotteryInfo, _currentLotteryInfo$m, _currentLotteryInfo$m2, unixend, nooftickets, noofwinners, minpercentage, ticketprice;
+function checkAllowance() {
+  return _checkAllowance.apply(this, arguments);
+} // USER FACET DIV FUNCTIONS
+function _checkAllowance() {
+  _checkAllowance = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee10() {
+    var ownerAddress, spenderAddress, allowanceAmount;
     return _regeneratorRuntime().wrap(function _callee10$(_context10) {
       while (1) switch (_context10.prev = _context10.next) {
         case 0:
@@ -23140,36 +23163,53 @@ function _getLotteryInfo() {
           return provider.getSigner();
         case 3:
           signer = _context10.sent;
-          lotteryNumber = document.querySelector('#lotteryNo[data-region="getLotteryInfo"]').value;
-          _context10.next = 7;
-          return userFacet.connect(signer).getLotteryInfo(lotteryNumber);
-        case 7:
-          currentLotteryInfo = _context10.sent;
-          _currentLotteryInfo$m = currentLotteryInfo.map(function (value) {
-            return Number(value);
-          }), _currentLotteryInfo$m2 = _slicedToArray(_currentLotteryInfo$m, 5), unixend = _currentLotteryInfo$m2[0], nooftickets = _currentLotteryInfo$m2[1], noofwinners = _currentLotteryInfo$m2[2], minpercentage = _currentLotteryInfo$m2[3], ticketprice = _currentLotteryInfo$m2[4];
-          document.getElementById("getLotteryInfoOutput").innerHTML = "<b>Lottery Number:</b> ".concat(lotteryNumber, "<br /><b>End Time:</b> ").concat(unixend, "<br /><b>Tickets Issued:</b> ").concat(nooftickets, "<br /><b>Number of Winners:</b> ").concat(noofwinners, "<br /><b>Minimum Percentage:</b> ").concat(minpercentage, "<br /><b>Ticket Price:</b> ").concat(ticketprice);
-          _context10.next = 16;
+          ownerAddress = document.querySelector('#ownerAddress[data-region="allowance"]').value;
+          spenderAddress = document.querySelector('#spenderAddress[data-region="allowance"]').value;
+          console.log("Owner Address: ", ownerAddress);
+          console.log("Spender Address: ", spenderAddress);
+          _context10.next = 10;
+          return lotteryToken.connect(signer).allowance(ownerAddress, spenderAddress);
+        case 10:
+          allowanceAmount = _context10.sent;
+          // const tx = await lotteryToken.connect(signer).allowance(ownerAddress, spenderAddress);
+          // const receipt = await tx.wait();
+
+          console.log("Allowance Amount: \n", allowanceAmount);
+          if (allowanceAmount !== undefined && allowanceAmount !== null) {
+            document.getElementById("allowanceOutput").innerHTML = "<b>Allowance amount:</b> ".concat(allowanceAmount);
+          } else {
+            console.log("Allowance Amount: \n", allowanceAmount);
+          }
+
+          // if (receipt !== undefined && receipt !== null) {
+          //     document.getElementById("allowanceOutput").innerHTML = `<b>Done</b>`;
+          // }
+          // else {
+          //     console.log(`TX:\n${tx}`);
+          //     console.log(`RECEIPT:\n${receipt}`);
+          // }
+          _context10.next = 20;
           break;
-        case 12:
-          _context10.prev = 12;
+        case 15:
+          _context10.prev = 15;
           _context10.t0 = _context10["catch"](0);
+          console.log(_context10.t0);
           console.error(_context10.t0.info);
-          document.getElementById("getCurrentLotteryNoOutput").innerText = _context10.t0.shortMesssage;
-        case 16:
+          document.getElementById("allowanceOutput").innerText = _context10.t0.shortMesssage;
+        case 20:
         case "end":
           return _context10.stop();
       }
-    }, _callee10, null, [[0, 12]]);
+    }, _callee10, null, [[0, 15]]);
   }));
-  return _getLotteryInfo.apply(this, arguments);
+  return _checkAllowance.apply(this, arguments);
 }
-function getPaymentToken() {
-  return _getPaymentToken.apply(this, arguments);
-} // OWNERSHIP FACET DIV FUNCTIONS
-function _getPaymentToken() {
-  _getPaymentToken = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee11() {
-    var lotteryNumber, paymentTokenAddress;
+function getCurrentLotteryNo() {
+  return _getCurrentLotteryNo.apply(this, arguments);
+}
+function _getCurrentLotteryNo() {
+  _getCurrentLotteryNo = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee11() {
+    var lotteryNumber;
     return _regeneratorRuntime().wrap(function _callee11$(_context11) {
       while (1) switch (_context11.prev = _context11.next) {
         case 0:
@@ -23178,33 +23218,32 @@ function _getPaymentToken() {
           return provider.getSigner();
         case 3:
           signer = _context11.sent;
-          lotteryNumber = document.querySelector('#lotteryNo[data-region="getPaymentToken"]').value;
-          _context11.next = 7;
-          return userFacet.connect(signer).getPaymentToken(lotteryNumber);
-        case 7:
-          paymentTokenAddress = _context11.sent;
-          document.getElementById("getPaymentTokenOutput").innerHTML = "<b>Payment token address:</b> ".concat(paymentTokenAddress);
-          _context11.next = 15;
+          _context11.next = 6;
+          return userFacet.connect(signer).getCurrentLotteryNo();
+        case 6:
+          lotteryNumber = _context11.sent;
+          document.getElementById("getCurrentLotteryNoOutput").innerHTML = "<b>Current Lottery Number:</b> ".concat(lotteryNumber);
+          _context11.next = 14;
           break;
-        case 11:
-          _context11.prev = 11;
+        case 10:
+          _context11.prev = 10;
           _context11.t0 = _context11["catch"](0);
           console.error(_context11.t0.info);
-          document.getElementById("getPaymentTokenOutput").innerText = _context11.t0.shortMesssage;
-        case 15:
+          document.getElementById("getCurrentLotteryNoOutput").innerText = _context11.t0.shortMesssage;
+        case 14:
         case "end":
           return _context11.stop();
       }
-    }, _callee11, null, [[0, 11]]);
+    }, _callee11, null, [[0, 10]]);
   }));
-  return _getPaymentToken.apply(this, arguments);
+  return _getCurrentLotteryNo.apply(this, arguments);
 }
-function setPaymentToken() {
-  return _setPaymentToken.apply(this, arguments);
+function getLotteryInfo() {
+  return _getLotteryInfo.apply(this, arguments);
 }
-function _setPaymentToken() {
-  _setPaymentToken = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee12() {
-    var paymentTokenAddress, tx, receipt, events, setPaymentTokenAddress, errorInterface, decodedError;
+function _getLotteryInfo() {
+  _getLotteryInfo = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee12() {
+    var lotteryNumber, currentLotteryInfo, _currentLotteryInfo$m, _currentLotteryInfo$m2, unixend, nooftickets, noofwinners, minpercentage, ticketprice;
     return _regeneratorRuntime().wrap(function _callee12$(_context12) {
       while (1) switch (_context12.prev = _context12.next) {
         case 0:
@@ -23213,48 +23252,36 @@ function _setPaymentToken() {
           return provider.getSigner();
         case 3:
           signer = _context12.sent;
-          paymentTokenAddress = document.getElementById("paymentTokenAddress").value;
+          lotteryNumber = document.querySelector('#lotteryNo[data-region="getLotteryInfo"]').value;
           _context12.next = 7;
-          return ownershipFacet.connect(signer).setPaymentToken(paymentTokenAddress);
+          return userFacet.connect(signer).getLotteryInfo(lotteryNumber);
         case 7:
-          tx = _context12.sent;
-          _context12.next = 10;
-          return tx.wait();
-        case 10:
-          receipt = _context12.sent;
-          _context12.next = 13;
-          return diamond.connect(provider).queryFilter(ownershipFacet.filters.PaymentTokenSet, receipt.blockNumber, receipt.blockNumber);
-        case 13:
-          events = _context12.sent;
-          setPaymentTokenAddress = events[0].args[0];
-          document.getElementById("setPaymentTokenOutput").innerHTML = "<b>Payment token set: </b> ".concat(setPaymentTokenAddress);
-          _context12.next = 23;
+          currentLotteryInfo = _context12.sent;
+          _currentLotteryInfo$m = currentLotteryInfo.map(function (value) {
+            return Number(value);
+          }), _currentLotteryInfo$m2 = _slicedToArray(_currentLotteryInfo$m, 5), unixend = _currentLotteryInfo$m2[0], nooftickets = _currentLotteryInfo$m2[1], noofwinners = _currentLotteryInfo$m2[2], minpercentage = _currentLotteryInfo$m2[3], ticketprice = _currentLotteryInfo$m2[4];
+          document.getElementById("getLotteryInfoOutput").innerHTML = "<b>Lottery Number:</b> ".concat(lotteryNumber, "<br /><b>End Time:</b> ").concat(unixend, "<br /><b>Tickets Issued:</b> ").concat(nooftickets, "<br /><b>Number of Winners:</b> ").concat(noofwinners, "<br /><b>Minimum Percentage:</b> ").concat(minpercentage, "<br /><b>Ticket Price:</b> ").concat(ticketprice);
+          _context12.next = 16;
           break;
-        case 18:
-          _context12.prev = 18;
+        case 12:
+          _context12.prev = 12;
           _context12.t0 = _context12["catch"](0);
-          errorInterface = new ethers__WEBPACK_IMPORTED_MODULE_3__.Interface(["error NotContractOwner(address _user, address _contractOwner)"]);
-          decodedError = errorInterface.parseError(_context12.t0.data);
-          if (decodedError.name !== undefined) {
-            document.getElementById("setPaymentTokenOutput").innerText = decodedError.name;
-          } else {
-            console.error(_context12.t0);
-            document.getElementById("setPaymentTokenOutput").innerText = "Error";
-          }
-        case 23:
+          console.error(_context12.t0.info);
+          document.getElementById("getCurrentLotteryNoOutput").innerText = _context12.t0.shortMesssage;
+        case 16:
         case "end":
           return _context12.stop();
       }
-    }, _callee12, null, [[0, 18]]);
+    }, _callee12, null, [[0, 12]]);
   }));
-  return _setPaymentToken.apply(this, arguments);
+  return _getLotteryInfo.apply(this, arguments);
 }
-function createLottery() {
-  return _createLottery.apply(this, arguments);
-} // VIEW CONTRACT ADDRESSES AT THE TOP OF THE PAGE
-function _createLottery() {
-  _createLottery = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee13() {
-    var endTime, ticketsIssued, numberOfWinners, minPercentage, ticketPrice, htmlHash, url, tx, receipt, lotteryNumber, errorInterface, decodedError;
+function getRevealTime() {
+  return _getRevealTime.apply(this, arguments);
+}
+function _getRevealTime() {
+  _getRevealTime = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee13() {
+    var lotteryNumber, revealTime;
     return _regeneratorRuntime().wrap(function _callee13$(_context13) {
       while (1) switch (_context13.prev = _context13.next) {
         case 0:
@@ -23263,6 +23290,535 @@ function _createLottery() {
           return provider.getSigner();
         case 3:
           signer = _context13.sent;
+          lotteryNumber = document.querySelector('#lotteryNo[data-region="getRevealTime"]').value;
+          _context13.next = 7;
+          return userFacet.connect(signer).getRevealTime(lotteryNumber);
+        case 7:
+          revealTime = _context13.sent;
+          document.getElementById("getRevealTimeOutput").innerHTML = "<b>Reveal time:</b> ".concat(revealTime);
+          _context13.next = 16;
+          break;
+        case 11:
+          _context13.prev = 11;
+          _context13.t0 = _context13["catch"](0);
+          console.log("CATCHED ERROR:\n".concat(_context13.t0));
+          console.error(_context13.t0.info);
+          document.getElementById("getRevealTimeOutput").innerText = _context13.t0.shortMesssage;
+        case 16:
+        case "end":
+          return _context13.stop();
+      }
+    }, _callee13, null, [[0, 11]]);
+  }));
+  return _getRevealTime.apply(this, arguments);
+}
+function getPaymentToken() {
+  return _getPaymentToken.apply(this, arguments);
+}
+function _getPaymentToken() {
+  _getPaymentToken = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee14() {
+    var lotteryNumber, paymentTokenAddress;
+    return _regeneratorRuntime().wrap(function _callee14$(_context14) {
+      while (1) switch (_context14.prev = _context14.next) {
+        case 0:
+          _context14.prev = 0;
+          _context14.next = 3;
+          return provider.getSigner();
+        case 3:
+          signer = _context14.sent;
+          lotteryNumber = document.querySelector('#lotteryNo[data-region="getPaymentToken"]').value;
+          _context14.next = 7;
+          return userFacet.connect(signer).getPaymentToken(lotteryNumber);
+        case 7:
+          paymentTokenAddress = _context14.sent;
+          document.getElementById("getPaymentTokenOutput").innerHTML = "<b>Payment token address:</b> ".concat(paymentTokenAddress);
+          _context14.next = 15;
+          break;
+        case 11:
+          _context14.prev = 11;
+          _context14.t0 = _context14["catch"](0);
+          console.error(_context14.t0.info);
+          document.getElementById("getPaymentTokenOutput").innerText = _context14.t0.shortMesssage;
+        case 15:
+        case "end":
+          return _context14.stop();
+      }
+    }, _callee14, null, [[0, 11]]);
+  }));
+  return _getPaymentToken.apply(this, arguments);
+}
+function getLotteryURL() {
+  return _getLotteryURL.apply(this, arguments);
+}
+function _getLotteryURL() {
+  _getLotteryURL = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee15() {
+    var lotteryNumber, lotteryURL, _lotteryURL, htmlhash, url;
+    return _regeneratorRuntime().wrap(function _callee15$(_context15) {
+      while (1) switch (_context15.prev = _context15.next) {
+        case 0:
+          _context15.prev = 0;
+          _context15.next = 3;
+          return provider.getSigner();
+        case 3:
+          signer = _context15.sent;
+          lotteryNumber = document.querySelector('#lotteryNo[data-region="getLotteryURL"]').value;
+          _context15.next = 7;
+          return userFacet.connect(signer).getLotteryURL(lotteryNumber);
+        case 7:
+          lotteryURL = _context15.sent;
+          _lotteryURL = _slicedToArray(lotteryURL, 2), htmlhash = _lotteryURL[0], url = _lotteryURL[1];
+          document.getElementById("getLotteryURLOutput1").innerHTML = "<b>HTML hash:</b> ".concat(htmlhash);
+          document.getElementById("getLotteryURLOutput2").innerHTML = "<b>URL:</b> ".concat(url);
+          _context15.next = 17;
+          break;
+        case 13:
+          _context15.prev = 13;
+          _context15.t0 = _context15["catch"](0);
+          console.error(_context15.t0.info);
+          document.getElementById("getLotteryURLOutput1").innerText = _context15.t0.shortMesssage;
+        case 17:
+        case "end":
+          return _context15.stop();
+      }
+    }, _callee15, null, [[0, 13]]);
+  }));
+  return _getLotteryURL.apply(this, arguments);
+}
+function buyTicket() {
+  return _buyTicket.apply(this, arguments);
+}
+function _buyTicket() {
+  _buyTicket = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee16() {
+    var lotteryNumber, quantity, hashRandomNumber, tx, receipt, events, startTicketNo;
+    return _regeneratorRuntime().wrap(function _callee16$(_context16) {
+      while (1) switch (_context16.prev = _context16.next) {
+        case 0:
+          _context16.prev = 0;
+          _context16.next = 3;
+          return provider.getSigner();
+        case 3:
+          signer = _context16.sent;
+          lotteryNumber = document.querySelector('#lotteryNo[data-region="buyTicketTx"]').value;
+          quantity = document.querySelector('#quantity[data-region="buyTicketTx"]').value;
+          hashRandomNumber = document.querySelector('#randomNumberHash[data-region="buyTicketTx"]').value;
+          _context16.next = 9;
+          return userFacet.connect(signer).buyTicketTx(lotteryNumber, quantity, hashRandomNumber);
+        case 9:
+          tx = _context16.sent;
+          console.log("TX: ", tx);
+          _context16.next = 13;
+          return tx.wait();
+        case 13:
+          receipt = _context16.sent;
+          console.log("RECEIPT: ", receipt);
+          _context16.next = 17;
+          return diamond.connect(provider).queryFilter(userFacet.filters.NewPurchaseMade, receipt.blockNumber, receipt.blockNumber);
+        case 17:
+          events = _context16.sent;
+          console.log("EVENTS: ", events);
+          startTicketNo = Number(events[0].args[0]);
+          document.getElementById("buyTicketTxOutput").innerHTML = "<b>Start ticket no:</b> ".concat(startTicketNo);
+          _context16.next = 28;
+          break;
+        case 23:
+          _context16.prev = 23;
+          _context16.t0 = _context16["catch"](0);
+          console.log("ERROR: \n", _context16.t0);
+          console.error(_context16.t0.info);
+          document.getElementById("buyTicketTxOutput").innerText = _context16.t0.shortMesssage;
+        case 28:
+        case "end":
+          return _context16.stop();
+      }
+    }, _callee16, null, [[0, 23]]);
+  }));
+  return _buyTicket.apply(this, arguments);
+}
+function getLotterySales() {
+  return _getLotterySales.apply(this, arguments);
+}
+function _getLotterySales() {
+  _getLotterySales = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee17() {
+    var lotteryNumber, lotterySales;
+    return _regeneratorRuntime().wrap(function _callee17$(_context17) {
+      while (1) switch (_context17.prev = _context17.next) {
+        case 0:
+          _context17.prev = 0;
+          _context17.next = 3;
+          return provider.getSigner();
+        case 3:
+          signer = _context17.sent;
+          lotteryNumber = document.querySelector('#lotteryNo[data-region="getLotterySales"]').value;
+          _context17.next = 7;
+          return userFacet.connect(signer).getLotterySales(lotteryNumber);
+        case 7:
+          lotterySales = _context17.sent;
+          document.getElementById("getLotterySalesOutput").innerHTML = "<b>Number of sold tickets:</b> ".concat(lotterySales);
+          _context17.next = 16;
+          break;
+        case 11:
+          _context17.prev = 11;
+          _context17.t0 = _context17["catch"](0);
+          console.log("CATCHED ERROR:\n".concat(_context17.t0));
+          console.error(_context17.t0.info);
+          document.getElementById("getLotterySalesOutput").innerText = _context17.t0.shortMesssage;
+        case 16:
+        case "end":
+          return _context17.stop();
+      }
+    }, _callee17, null, [[0, 11]]);
+  }));
+  return _getLotterySales.apply(this, arguments);
+}
+function getNumPurchaseTxs() {
+  return _getNumPurchaseTxs.apply(this, arguments);
+}
+function _getNumPurchaseTxs() {
+  _getNumPurchaseTxs = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee18() {
+    var lotteryNumber, purchasesMade;
+    return _regeneratorRuntime().wrap(function _callee18$(_context18) {
+      while (1) switch (_context18.prev = _context18.next) {
+        case 0:
+          _context18.prev = 0;
+          _context18.next = 3;
+          return provider.getSigner();
+        case 3:
+          signer = _context18.sent;
+          lotteryNumber = document.querySelector('#lotteryNo[data-region="getNumPurchaseTxs"]').value;
+          _context18.next = 7;
+          return userFacet.connect(signer).getNumPurchaseTxs(lotteryNumber);
+        case 7:
+          purchasesMade = _context18.sent;
+          document.getElementById("getNumPurchaseTxsOutput").innerHTML = "<b>Number of purchase transactions:</b> ".concat(purchasesMade);
+          _context18.next = 16;
+          break;
+        case 11:
+          _context18.prev = 11;
+          _context18.t0 = _context18["catch"](0);
+          console.log("CATCHED ERROR:\n".concat(_context18.t0));
+          console.error(_context18.t0.info);
+          document.getElementById("getNumPurchaseTxsOutput").innerText = _context18.t0.shortMesssage;
+        case 16:
+        case "end":
+          return _context18.stop();
+      }
+    }, _callee18, null, [[0, 11]]);
+  }));
+  return _getNumPurchaseTxs.apply(this, arguments);
+}
+function getIthPurchasedTicketTx() {
+  return _getIthPurchasedTicketTx.apply(this, arguments);
+}
+function _getIthPurchasedTicketTx() {
+  _getIthPurchasedTicketTx = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee19() {
+    var i, lotteryNumber, purchase, _purchase, startTicketNo, quantity;
+    return _regeneratorRuntime().wrap(function _callee19$(_context19) {
+      while (1) switch (_context19.prev = _context19.next) {
+        case 0:
+          _context19.prev = 0;
+          _context19.next = 3;
+          return provider.getSigner();
+        case 3:
+          signer = _context19.sent;
+          i = document.querySelector('#i[data-region="getIthPurchasedTicketTx"]').value;
+          lotteryNumber = document.querySelector('#lotteryNo[data-region="getIthPurchasedTicketTx"]').value;
+          _context19.next = 8;
+          return userFacet.connect(signer).getIthPurchasedTicketTx(i, lotteryNumber);
+        case 8:
+          purchase = _context19.sent;
+          _purchase = _slicedToArray(purchase, 2), startTicketNo = _purchase[0], quantity = _purchase[1];
+          document.getElementById("getIthPurchasedTicketTxOutput1").innerHTML = "<b>Start ticket no:</b> ".concat(startTicketNo);
+          document.getElementById("getIthPurchasedTicketTxOutput2").innerHTML = "<b>Quantity:</b> ".concat(quantity);
+          _context19.next = 19;
+          break;
+        case 14:
+          _context19.prev = 14;
+          _context19.t0 = _context19["catch"](0);
+          console.log("CATCHED ERROR:\n".concat(_context19.t0));
+          console.error(_context19.t0.info);
+          document.getElementById("getIthPurchasedTicketTxOutput1").innerText = _context19.t0.shortMesssage;
+        case 19:
+        case "end":
+          return _context19.stop();
+      }
+    }, _callee19, null, [[0, 14]]);
+  }));
+  return _getIthPurchasedTicketTx.apply(this, arguments);
+}
+function revealRandomNumber() {
+  return _revealRandomNumber.apply(this, arguments);
+}
+function _revealRandomNumber() {
+  _revealRandomNumber = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee20() {
+    var lotteryNumber, startTicketNumber, quantity, randomNumberText, randomNumber, tx, receipt, isValid, response;
+    return _regeneratorRuntime().wrap(function _callee20$(_context20) {
+      while (1) switch (_context20.prev = _context20.next) {
+        case 0:
+          _context20.prev = 0;
+          _context20.next = 3;
+          return provider.getSigner();
+        case 3:
+          signer = _context20.sent;
+          lotteryNumber = document.querySelector('#lotteryNo[data-region="revealRndNumberTx"]').value;
+          startTicketNumber = document.querySelector('#startTicketNo[data-region="revealRndNumberTx"]').value;
+          quantity = document.querySelector('#quantity[data-region="revealRndNumberTx"]').value;
+          randomNumberText = document.querySelector('#randomNumber[data-region="revealRndNumberTx"]').value;
+          randomNumber = ethers__WEBPACK_IMPORTED_MODULE_5__.toBigInt(randomNumberText);
+          _context20.next = 11;
+          return userFacet.connect(signer).revealRndNumberTx(lotteryNumber, startTicketNumber, quantity, randomNumber);
+        case 11:
+          tx = _context20.sent;
+          console.log("TX: ", tx);
+          _context20.next = 15;
+          return tx.wait();
+        case 15:
+          receipt = _context20.sent;
+          console.log("RECEIPT: ", receipt);
+          isValid = receipt.logs[0].fragment.name === "ValidReveal";
+          response = "".concat(isValid === true ? "Valid - Successfully revealed the random number and obtained a chance at winning." : "Invalid - Provided random number doesn't produce the correct hash. Winning chance is lost, and there will be no refund.");
+          document.getElementById("revealRndNumberTxOutput").innerHTML = "<b>Reveal:</b> ".concat(response);
+          _context20.next = 27;
+          break;
+        case 22:
+          _context20.prev = 22;
+          _context20.t0 = _context20["catch"](0);
+          console.log("CATCHED ERROR:\n".concat(_context20.t0));
+          console.error(_context20.t0.info);
+          document.getElementById("revealRndNumberTxOutput").innerText = _context20.t0.shortMesssage;
+        case 27:
+        case "end":
+          return _context20.stop();
+      }
+    }, _callee20, null, [[0, 22]]);
+  }));
+  return _revealRandomNumber.apply(this, arguments);
+}
+function getIthWinningTicket() {
+  return _getIthWinningTicket.apply(this, arguments);
+}
+function _getIthWinningTicket() {
+  _getIthWinningTicket = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee21() {
+    var lotteryNumber, i, winningTicketNo;
+    return _regeneratorRuntime().wrap(function _callee21$(_context21) {
+      while (1) switch (_context21.prev = _context21.next) {
+        case 0:
+          _context21.prev = 0;
+          _context21.next = 3;
+          return provider.getSigner();
+        case 3:
+          signer = _context21.sent;
+          lotteryNumber = document.querySelector('#lotteryNo[data-region="getIthWinningTicket"]').value;
+          i = document.querySelector('#i[data-region="getIthWinningTicket"]').value;
+          _context21.next = 8;
+          return userFacet.connect(signer).getIthWinningTicket(lotteryNumber, i);
+        case 8:
+          winningTicketNo = _context21.sent;
+          document.getElementById("getIthWinningTicketOutput").innerHTML = "<b>".concat(i, "th winning ticket no:</b> ").concat(winningTicketNo);
+          _context21.next = 17;
+          break;
+        case 12:
+          _context21.prev = 12;
+          _context21.t0 = _context21["catch"](0);
+          console.log("CATCHED ERROR:\n".concat(_context21.t0));
+          console.error(_context21.t0.info);
+          document.getElementById("getIthWinningTicketOutput").innerText = _context21.t0.shortMesssage;
+        case 17:
+        case "end":
+          return _context21.stop();
+      }
+    }, _callee21, null, [[0, 12]]);
+  }));
+  return _getIthWinningTicket.apply(this, arguments);
+}
+function checkIfMyTicketWon() {
+  return _checkIfMyTicketWon.apply(this, arguments);
+}
+function _checkIfMyTicketWon() {
+  _checkIfMyTicketWon = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee22() {
+    var lotteryNumber, ticketNumber, won;
+    return _regeneratorRuntime().wrap(function _callee22$(_context22) {
+      while (1) switch (_context22.prev = _context22.next) {
+        case 0:
+          _context22.prev = 0;
+          _context22.next = 3;
+          return provider.getSigner();
+        case 3:
+          signer = _context22.sent;
+          lotteryNumber = document.querySelector('#lotteryNo[data-region="checkIfMyTicketWon"]').value;
+          ticketNumber = document.querySelector('#ticketNo[data-region="checkIfMyTicketWon"]').value;
+          _context22.next = 8;
+          return userFacet.connect(signer).checkIfMyTicketWon(lotteryNumber, ticketNumber);
+        case 8:
+          won = _context22.sent;
+          document.getElementById("checkIfMyTicketWonOutput").innerHTML = "<b>Ticket(".concat(ticketNumber, ") status:</b> ").concat(won === true ? "Won" : "Didn't win");
+          _context22.next = 17;
+          break;
+        case 12:
+          _context22.prev = 12;
+          _context22.t0 = _context22["catch"](0);
+          console.log("CATCHED ERROR:\n".concat(_context22.t0));
+          console.error(_context22.t0.info);
+          document.getElementById("checkIfMyTicketWonOutput").innerText = _context22.t0.shortMesssage;
+        case 17:
+        case "end":
+          return _context22.stop();
+      }
+    }, _callee22, null, [[0, 12]]);
+  }));
+  return _checkIfMyTicketWon.apply(this, arguments);
+}
+function checkIfAddrTicketWon() {
+  return _checkIfAddrTicketWon.apply(this, arguments);
+}
+function _checkIfAddrTicketWon() {
+  _checkIfAddrTicketWon = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee23() {
+    var address, lotteryNumber, ticketNumber, won;
+    return _regeneratorRuntime().wrap(function _callee23$(_context23) {
+      while (1) switch (_context23.prev = _context23.next) {
+        case 0:
+          _context23.prev = 0;
+          _context23.next = 3;
+          return provider.getSigner();
+        case 3:
+          signer = _context23.sent;
+          address = document.querySelector('#address[data-region="checkIfAddrTicketWon"]').value;
+          lotteryNumber = document.querySelector('#lotteryNo[data-region="checkIfAddrTicketWon"]').value;
+          ticketNumber = document.querySelector('#ticketNo[data-region="checkIfAddrTicketWon"]').value;
+          _context23.next = 9;
+          return userFacet.connect(signer).checkIfAddrTicketWon(address, lotteryNumber, ticketNumber);
+        case 9:
+          won = _context23.sent;
+          document.getElementById("checkIfAddrTicketWonOutput").innerHTML = "<b>Ticket(".concat(ticketNumber, ") status:</b> ").concat(won === true ? "Won" : "Didn't win");
+          _context23.next = 18;
+          break;
+        case 13:
+          _context23.prev = 13;
+          _context23.t0 = _context23["catch"](0);
+          console.log("CATCHED ERROR:\n".concat(_context23.t0));
+          console.error(_context23.t0.info);
+          document.getElementById("checkIfAddrTicketWonOutput").innerText = _context23.t0.shortMesssage;
+        case 18:
+        case "end":
+          return _context23.stop();
+      }
+    }, _callee23, null, [[0, 13]]);
+  }));
+  return _checkIfAddrTicketWon.apply(this, arguments);
+}
+function withdrawTicketRefund() {
+  return _withdrawTicketRefund.apply(this, arguments);
+} // OWNERSHIP FACET DIV FUNCTIONS
+function _withdrawTicketRefund() {
+  _withdrawTicketRefund = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee24() {
+    var lotteryNumber, startTicketNumber, tx, receipt, events, payedAmount, remainingRefund;
+    return _regeneratorRuntime().wrap(function _callee24$(_context24) {
+      while (1) switch (_context24.prev = _context24.next) {
+        case 0:
+          _context24.prev = 0;
+          _context24.next = 3;
+          return provider.getSigner();
+        case 3:
+          signer = _context24.sent;
+          lotteryNumber = document.querySelector('#lotteryNo[data-region="withdrawTicketRefund"]').value;
+          startTicketNumber = document.querySelector('#startTicketNo[data-region="withdrawTicketRefund"]').value;
+          _context24.next = 8;
+          return userFacet.connect(signer).withdrawTicketRefund(lotteryNumber, startTicketNumber);
+        case 8:
+          tx = _context24.sent;
+          console.log("TX: ", tx);
+          _context24.next = 12;
+          return tx.wait();
+        case 12:
+          receipt = _context24.sent;
+          console.log("RECEIPT: ", receipt);
+          _context24.next = 16;
+          return diamond.connect(provider).queryFilter(userFacet.filters.PaymentMade, receipt.blockNumber, receipt.blockNumber);
+        case 16:
+          events = _context24.sent;
+          console.log("EVENTS: ", events);
+          payedAmount = Number(events[0].args[0]);
+          remainingRefund = Number(events[0].args[1]);
+          document.getElementById("withdrawTicketRefundOutput").innerHTML = "Payment made.<br /><b>Payed amount:</b> ".concat(payedAmount, " LT<br /><b>Remaining refund:</b> ").concat(remainingRefund, " LT");
+          _context24.next = 28;
+          break;
+        case 23:
+          _context24.prev = 23;
+          _context24.t0 = _context24["catch"](0);
+          console.log("CATCHED ERROR:\n".concat(_context24.t0));
+          console.error(_context24.t0.info);
+          document.getElementById("withdrawTicketRefundOutput").innerText = _context24.t0.shortMesssage;
+        case 28:
+        case "end":
+          return _context24.stop();
+      }
+    }, _callee24, null, [[0, 23]]);
+  }));
+  return _withdrawTicketRefund.apply(this, arguments);
+}
+function setPaymentToken() {
+  return _setPaymentToken.apply(this, arguments);
+}
+function _setPaymentToken() {
+  _setPaymentToken = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee25() {
+    var paymentTokenAddress, tx, receipt, events, setPaymentTokenAddress, errorInterface, decodedError;
+    return _regeneratorRuntime().wrap(function _callee25$(_context25) {
+      while (1) switch (_context25.prev = _context25.next) {
+        case 0:
+          _context25.prev = 0;
+          _context25.next = 3;
+          return provider.getSigner();
+        case 3:
+          signer = _context25.sent;
+          paymentTokenAddress = document.getElementById("paymentTokenAddress").value;
+          _context25.next = 7;
+          return ownershipFacet.connect(signer).setPaymentToken(paymentTokenAddress);
+        case 7:
+          tx = _context25.sent;
+          _context25.next = 10;
+          return tx.wait();
+        case 10:
+          receipt = _context25.sent;
+          _context25.next = 13;
+          return diamond.connect(provider).queryFilter(ownershipFacet.filters.PaymentTokenSet, receipt.blockNumber, receipt.blockNumber);
+        case 13:
+          events = _context25.sent;
+          setPaymentTokenAddress = events[0].args[0];
+          document.getElementById("setPaymentTokenOutput").innerHTML = "<b>Payment token set: </b> ".concat(setPaymentTokenAddress);
+          _context25.next = 23;
+          break;
+        case 18:
+          _context25.prev = 18;
+          _context25.t0 = _context25["catch"](0);
+          errorInterface = new ethers__WEBPACK_IMPORTED_MODULE_3__.Interface(["error NotContractOwner(address _user, address _contractOwner)"]);
+          decodedError = errorInterface.parseError(_context25.t0.data);
+          if (decodedError.name !== undefined) {
+            document.getElementById("setPaymentTokenOutput").innerText = decodedError.name;
+          } else {
+            console.error(_context25.t0);
+            document.getElementById("setPaymentTokenOutput").innerText = "Error";
+          }
+        case 23:
+        case "end":
+          return _context25.stop();
+      }
+    }, _callee25, null, [[0, 18]]);
+  }));
+  return _setPaymentToken.apply(this, arguments);
+}
+function createLottery() {
+  return _createLottery.apply(this, arguments);
+}
+function _createLottery() {
+  _createLottery = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee26() {
+    var endTime, ticketsIssued, numberOfWinners, minPercentage, ticketPrice, htmlHash, url, tx, receipt, events, lotteryNumber, errorInterface, decodedError;
+    return _regeneratorRuntime().wrap(function _callee26$(_context26) {
+      while (1) switch (_context26.prev = _context26.next) {
+        case 0:
+          _context26.prev = 0;
+          _context26.next = 3;
+          return provider.getSigner();
+        case 3:
+          signer = _context26.sent;
           endTime = document.getElementById("endTime").value;
           ticketsIssued = document.getElementById("ticketsIssued").value;
           numberOfWinners = document.getElementById("numberOfWinners").value;
@@ -23270,37 +23826,139 @@ function _createLottery() {
           ticketPrice = document.getElementById("ticketPrice").value;
           htmlHash = document.getElementById("htmlHash").value;
           url = document.getElementById("url").value;
-          _context13.next = 13;
+          _context26.next = 13;
           return ownershipFacet.connect(signer).createLottery(endTime, ticketsIssued, numberOfWinners, minPercentage, ticketPrice, htmlHash, url);
         case 13:
-          tx = _context13.sent;
-          _context13.next = 16;
+          tx = _context26.sent;
+          _context26.next = 16;
           return tx.wait();
         case 16:
-          receipt = _context13.sent;
-          lotteryNumber = receipt.events[0].args.newLotteryNumber;
+          receipt = _context26.sent;
+          _context26.next = 19;
+          return diamond.connect(provider).queryFilter(ownershipFacet.filters.NewLotteryCreated, receipt.blockNumber, receipt.blockNumber);
+        case 19:
+          events = _context26.sent;
+          lotteryNumber = events[0].args[0];
           document.getElementById("createLotteryOutput").innerText = "Lottery Created: ".concat(lotteryNumber);
-          _context13.next = 27;
+          _context26.next = 30;
           break;
-        case 21:
-          _context13.prev = 21;
-          _context13.t0 = _context13["catch"](0);
-          console.log(_context13.t0);
+        case 24:
+          _context26.prev = 24;
+          _context26.t0 = _context26["catch"](0);
+          console.log("CATCHED ERROR:\n".concat(_context26.t0));
           errorInterface = new ethers__WEBPACK_IMPORTED_MODULE_3__.Interface(["error NotContractOwner(address _user, address _contractOwner)"]);
-          decodedError = errorInterface.parseError(_context13.t0.data);
+          decodedError = errorInterface.parseError(_context26.t0.data);
           if (decodedError.name !== undefined) {
-            document.getElementById("setPaymentTokenOutput").innerText = decodedError.name;
+            document.getElementById("createLotteryOutput").innerText = decodedError.name;
           } else {
-            console.error(_context13.t0);
-            document.getElementById("setPaymentTokenOutput").innerText = "Error";
+            console.error(_context26.t0);
+            document.getElementById("createLotteryOutput").innerText = "Error";
           }
-        case 27:
+        case 30:
         case "end":
-          return _context13.stop();
+          return _context26.stop();
       }
-    }, _callee13, null, [[0, 21]]);
+    }, _callee26, null, [[0, 24]]);
   }));
   return _createLottery.apply(this, arguments);
+}
+function finalizeLottery() {
+  return _finalizeLottery.apply(this, arguments);
+}
+function _finalizeLottery() {
+  _finalizeLottery = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee27() {
+    var lotteryNumber, tx, receipt, isCancelled, response, errorInterface, decodedError;
+    return _regeneratorRuntime().wrap(function _callee27$(_context27) {
+      while (1) switch (_context27.prev = _context27.next) {
+        case 0:
+          _context27.prev = 0;
+          _context27.next = 3;
+          return provider.getSigner();
+        case 3:
+          signer = _context27.sent;
+          lotteryNumber = document.querySelector('#lotteryNo[data-region="finalizeLottery"]').value;
+          _context27.next = 7;
+          return ownershipFacet.connect(signer).finalizeLottery(lotteryNumber);
+        case 7:
+          tx = _context27.sent;
+          console.log("TX: ", tx);
+          _context27.next = 11;
+          return tx.wait();
+        case 11:
+          receipt = _context27.sent;
+          console.log("RECEIPT: ", receipt);
+          isCancelled = receipt.logs[0].fragment.name === "Cancelled";
+          response = "".concat(isCancelled === true ? "Cancelled" : "Finalized successfully");
+          document.getElementById("finalizeLotteryOutput").innerHTML = "<b>Lottery status:</b> ".concat(response);
+          _context27.next = 24;
+          break;
+        case 18:
+          _context27.prev = 18;
+          _context27.t0 = _context27["catch"](0);
+          console.log("CATCHED ERROR:\n".concat(_context27.t0));
+          errorInterface = new ethers__WEBPACK_IMPORTED_MODULE_3__.Interface(["error NotContractOwner(address _user, address _contractOwner)"]);
+          decodedError = errorInterface.parseError(_context27.t0.data);
+          if (decodedError.name !== undefined) {
+            document.getElementById("finalizeLotteryOutput").innerText = decodedError.name;
+          } else {
+            console.error(_context27.t0);
+            document.getElementById("finalizeLotteryOutput").innerText = "Error";
+          }
+        case 24:
+        case "end":
+          return _context27.stop();
+      }
+    }, _callee27, null, [[0, 18]]);
+  }));
+  return _finalizeLottery.apply(this, arguments);
+}
+function withdrawTicketProceeds() {
+  return _withdrawTicketProceeds.apply(this, arguments);
+} // VIEW CONTRACT ADDRESSES AT THE TOP OF THE PAGE
+function _withdrawTicketProceeds() {
+  _withdrawTicketProceeds = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee28() {
+    var lotteryNumber, tx, receipt, errorInterface, decodedError;
+    return _regeneratorRuntime().wrap(function _callee28$(_context28) {
+      while (1) switch (_context28.prev = _context28.next) {
+        case 0:
+          _context28.prev = 0;
+          _context28.next = 3;
+          return provider.getSigner();
+        case 3:
+          signer = _context28.sent;
+          lotteryNumber = document.querySelector('#lotteryNo[data-region="withdrawTicketProceeds"]').value;
+          _context28.next = 7;
+          return ownershipFacet.connect(signer).withdrawTicketProceeds(lotteryNumber);
+        case 7:
+          tx = _context28.sent;
+          console.log("TX: ", tx);
+          _context28.next = 11;
+          return tx.wait();
+        case 11:
+          receipt = _context28.sent;
+          console.log("RECEIPT: ", receipt);
+          document.getElementById("withdrawTicketProceedsOutput").innerHTML = "<b>Done</b>";
+          _context28.next = 22;
+          break;
+        case 16:
+          _context28.prev = 16;
+          _context28.t0 = _context28["catch"](0);
+          console.log("CATCHED ERROR:\n".concat(_context28.t0));
+          errorInterface = new ethers__WEBPACK_IMPORTED_MODULE_3__.Interface(["error NotContractOwner(address _user, address _contractOwner)"]);
+          decodedError = errorInterface.parseError(_context28.t0.data);
+          if (decodedError.name !== undefined) {
+            document.getElementById("withdrawTicketProceedsOutput").innerText = decodedError.name;
+          } else {
+            console.error(_context28.t0);
+            document.getElementById("withdrawTicketProceedsOutput").innerText = "Error";
+          }
+        case 22:
+        case "end":
+          return _context28.stop();
+      }
+    }, _callee28, null, [[0, 16]]);
+  }));
+  return _withdrawTicketProceeds.apply(this, arguments);
 }
 document.getElementById("diamondAddress").innerHTML = "<b> Diamond address:</b> ".concat(diamondAddress);
 document.getElementById("lotteryTokenAddress").innerHTML = "<b> Lottery Token address:</b> ".concat(lotteryTokenAddress);
@@ -23313,15 +23971,30 @@ document.getElementById("getSigner").addEventListener("click", getCurrentSigner)
 document.getElementById("buyTokens").addEventListener("click", buyTokens);
 document.getElementById("getSignerBalance").addEventListener("click", getSignerBalance);
 document.getElementById("getAccountBalance").addEventListener("click", getAccountBalance);
+document.getElementById("approve").addEventListener("click", approve);
+document.getElementById("allowance").addEventListener("click", checkAllowance);
 
 // USER SECTION EVENT LISTENERS
 document.getElementById("getCurrentLotteryNo").addEventListener("click", getCurrentLotteryNo);
 document.getElementById("getLotteryInfo").addEventListener("click", getLotteryInfo);
+document.getElementById("getRevealTime").addEventListener("click", getRevealTime);
 document.getElementById("getPaymentToken").addEventListener("click", getPaymentToken);
+document.getElementById("getLotteryURL").addEventListener("click", getLotteryURL);
+document.getElementById("buyTicketTx").addEventListener("click", buyTicket);
+document.getElementById("getLotterySales").addEventListener("click", getLotterySales);
+document.getElementById("getNumPurchaseTxs").addEventListener("click", getNumPurchaseTxs);
+document.getElementById("getIthPurchasedTicketTx").addEventListener("click", getIthPurchasedTicketTx);
+document.getElementById("revealRndNumberTx").addEventListener("click", revealRandomNumber);
+document.getElementById("getIthWinningTicket").addEventListener("click", getIthWinningTicket);
+document.getElementById("checkIfMyTicketWon").addEventListener("click", checkIfMyTicketWon);
+document.getElementById("checkIfAddrTicketWon").addEventListener("click", checkIfAddrTicketWon);
+document.getElementById("withdrawTicketRefund").addEventListener("click", withdrawTicketRefund);
 
 // OWNERSHIP SECTION EVENT LISTENERS
 document.getElementById("setPaymentToken").addEventListener("click", setPaymentToken);
 document.getElementById("createLottery").addEventListener("click", createLottery);
+document.getElementById("finalizeLottery").addEventListener("click", finalizeLottery);
+document.getElementById("withdrawTicketProceeds").addEventListener("click", withdrawTicketProceeds);
 
 // 
 // document.getElementById("createLottery").addEventListener("click", createLottery);
