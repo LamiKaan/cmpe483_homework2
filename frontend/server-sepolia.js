@@ -14,10 +14,13 @@ async function startServer() {
 
 }
 
+app.get("/", (req, res) => {
+    console.log("Serving index-sepolia.html");
+    res.sendFile(path.join(__dirname, "public", "index-sepolia.html"));
+});
+
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.get("/", (req, res) => {
-//     res.sendFile(path.join(__dirname, "public", "index.html"));
-// });
+
 
 startServer();

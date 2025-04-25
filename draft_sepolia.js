@@ -80,9 +80,9 @@ async function main() {
     // Print addresses and balances
     await printAddressesAndBalances(provider, ownerSigner, buyerSigners);
 
-    // // Deploy diamond
-    // console.log();
-    // const [owner, facetFactories, diamondAdress, lotteryTokenAddress] = await deployDiamond();
+    // Deploy diamond
+    console.log();
+    const [owner, facetFactories, diamondAdress, lotteryTokenAddress] = await deployDiamond();
 
     // console.log();
     // console.log(`Owners match: ${await owner.signer.getAddress() === await ownerSigner.getAddress()}`);

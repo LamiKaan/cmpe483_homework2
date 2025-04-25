@@ -1,6 +1,6 @@
-./DS_Store
-./.vscode
-./.idea
+.DS_Store
+.vscode
+.idea
 
 ./class-materials
 ./hw1
@@ -29,3 +29,11 @@ node_modules
 
 # Hardhat Ignition default folder for deployments against a local node
 ignition/deployments/chain-31337
+
+frontend/public/bundle*
+frontend/index_old.html
+scripts/testResults*
+*.pdf
+*.txt
+'scripts/deploy_local copy.js'
+frontend/public/index_old.html

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Diamond UI</title>
+    <style>
+      /* Basic styling to create four regions */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      .region {
+        border: 1px solid black;
+        margin: 10px;
+        padding: 10px;
+      }
+
+      .region h2 {
+        margin-top: 0;
+      }
+
+      .region div {
+        border-bottom: 1px solid #ccc; /* Light gray line */
+        margin-bottom: 10px; /* Space between divs */
+        padding-bottom: 10px; /* Padding below the line for better spacing */
+      }
+
+      /* Optional: Remove the border from the last child */
+      .region div:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Diamond Lottery Interface - Sepolia</h1>
+    <p id="diamondAddress"></p>
+    <p id="lotteryTokenAddress"></p>
+
+    <!-- General Section -->
+    <div class="region" id="general">
+      <h2>General</h2>
+      <div>
+        <button id="getBlockTimestamp">Get Block Timestamp</button>
+        <p id="getBlockTimestampOutput"></p>
+      </div>
+      <div>
+        <button id="getSigner">Get Current Signer</button>
+        <p id="getSignerOutput"></p>
+      </div>
+    </div>
+
+    <!-- LotteryToken Section -->
+    <div class="region" id="lotteryToken">
+      <h2>LotteryToken</h2>
+      <div>
+        <p>You can buy 1000 lottery tokens per 1 gwei.</p>
+        <label for="gweiAmount">Amount of Gwei:</label>
+        <input type="number" id="gweiAmount" />
+        <br />
+        <button id="buyTokens">Buy Tokens</button>
+        <p id="buyTokensOutput"></p>
+      </div>
+      <div>
+        <button id="getSignerBalance">Get Signer Balance</button>
+        <p id="getSignerBalanceOutput"></p>
+      </div>
+      <div>
+        <label for="accountAddress">Account address:</label>
+        <input type="text" id="accountAddress" />
+        <br />
+        <button id="getAccountBalance">Get Balance</button>
+        <p id="getAccountBalanceOutput"></p>
+      </div>
+      <div>
+        <p>
+          Set some amount of tokens as the allowance of the "spender address".
+        </p>
+        <label data-region="approve" for="spenderAddress"
+          >Spender address:</label
+        >
+        <input data-region="approve" type="text" id="spenderAddress" />
+        <br />
+        <label data-region="approve" for="approveAmount"
+          >Amount of tokens:</label
+        >
+        <input data-region="approve" type="number" id="approveAmount" />
+        <br />
+        <button id="approve">Approve</button>
+        <p id="approveOutput"></p>
+      </div>
+      <div>
+        <p>Check allowence of "spender", approved by "owner".</p>
+        <label data-region="allowance" for="ownerAddress">Owner address:</label>
+        <input data-region="allowance" type="text" id="ownerAddress" />
+        <br />
+        <label data-region="allowance" for="spenderAddress"
+          >Spender address:</label
+        >
+        <input data-region="allowance" type="text" id="spenderAddress" />
+        <br />
+        <br />
+        <button id="allowance">Check allowance</button>
+        <p id="allowanceOutput"></p>
+      </div>
+    </div>
+
+    <!-- UserFacet Section -->
+    <div class="region" id="userFacet">
+      <h2>UserFacet</h2>
+      <div>
+        <button id="getCurrentLotteryNo">Get current lottery number</button>
+        <p id="getCurrentLotteryNoOutput"></p>
+      </div>
+      <div>
+        <label data-region="getLotteryInfo" for="lotteryNo"
+          >Lottery number:</label
+        >
+        <input data-region="getLotteryInfo" type="number" id="lotteryNo" />
+        <br />
+        <button id="getLotteryInfo">Get lottery info</button>
+        <p id="getLotteryInfoOutput"></p>
+      </div>
+      <div>
+        <label data-region="getRevealTime" for="lotteryNo"
+          >Lottery number:</label
+        >
+        <input data-region="getRevealTime" type="number" id="lotteryNo" />
+        <br />
+        <button id="getRevealTime">Get reveal time</button>
+        <p id="getRevealTimeOutput"></p>
+      </div>
+      <div>
+        <label data-region="getPaymentToken" for="lotteryNo"
+          >Lottery number:</label
+        >
+        <input data-region="getPaymentToken" type="number" id="lotteryNo" />
+        <br />
+        <button id="getPaymentToken">Get payment token</button>
+        <p id="getPaymentTokenOutput"></p>
+      </div>
+      <div>
+        <label data-region="getLotteryURL" for="lotteryNo"
+          >Lottery number:</label
+        >
+        <input data-region="getLotteryURL" type="number" id="lotteryNo" />
+        <br />
+        <button id="getLotteryURL">Get lottery URL</button>
+        <p id="getLotteryURLOutput1"></p>
+        <p id="getLotteryURLOutput2"></p>
+      </div>
+      <div>
+        <label data-region="buyTicketTx" for="lotteryNo">Lottery number:</label>
+        <input data-region="buyTicketTx" type="number" id="lotteryNo" />
+        <br />
+        <label data-region="buyTicketTx" for="quantity">Quantity:</label>
+        <input data-region="buyTicketTx" type="number" id="quantity" />
+        <br />
+        <label data-region="buyTicketTx" for="randomNumberHash"
+          >Random number hash:</label
+        >
+        <input data-region="buyTicketTx" type="text" id="randomNumberHash" />
+        <br />
+        <button id="buyTicketTx">Buy ticket</button>
+        <p id="buyTicketTxOutput"></p>
+      </div>
+      <div>
+        <label data-region="getLotterySales" for="lotteryNo"
+          >Lottery number:</label
+        >
+        <input data-region="getLotterySales" type="number" id="lotteryNo" />
+        <br />
+        <button id="getLotterySales">Get lottery sales</button>
+        <p id="getLotterySalesOutput"></p>
+      </div>
+      <div>
+        <label data-region="getNumPurchaseTxs" for="lotteryNo"
+          >Lottery number:</label
+        >
+        <input data-region="getNumPurchaseTxs" type="number" id="lotteryNo" />
+        <br />
+        <button id="getNumPurchaseTxs">Get purchase transactions</button>
+        <p id="getNumPurchaseTxsOutput"></p>
+      </div>
+      <div>
+        <label data-region="getIthPurchasedTicketTx" for="i">i:</label>
+        <input data-region="getIthPurchasedTicketTx" type="number" id="i" />
+        <br />
+        <label data-region="getIthPurchasedTicketTx" for="lotteryNo"
+          >Lottery number:</label
+        >
+        <input
+          data-region="getIthPurchasedTicketTx"
+          type="number"
+          id="lotteryNo"
+        />
+        <br />
+        <button id="getIthPurchasedTicketTx">
+          Get Ith purchsed ticket transaction
+        </button>
+        <p id="getIthPurchasedTicketTxOutput1"></p>
+        <p id="getIthPurchasedTicketTxOutput2"></p>
+      </div>
+      <div>
+        <label data-region="revealRndNumberTx" for="lotteryNo"
+          >Lottery number:</label
+        >
+        <input data-region="revealRndNumberTx" type="number" id="lotteryNo" />
+        <br />
+        <label data-region="revealRndNumberTx" for="startTicketNo"
+          >Start ticket number:</label
+        >
+        <input
+          data-region="revealRndNumberTx"
+          type="number"
+          id="startTicketNo"
+        />
+        <br />
+        <label data-region="revealRndNumberTx" for="quantity">Quantity:</label>
+        <input data-region="revealRndNumberTx" type="number" id="quantity" />
+        <br />
+        <label data-region="revealRndNumberTx" for="randomNumber"
+          >Random number:</label
+        >
+        <input data-region="revealRndNumberTx" type="text" id="randomNumber" />
+        <br />
+        <button id="revealRndNumberTx">Reveal random number</button>
+        <p id="revealRndNumberTxOutput"></p>
+      </div>
+      <div>
+        <label data-region="getIthWinningTicket" for="lotteryNo"
+          >Lottery number:</label
+        >
+        <input data-region="getIthWinningTicket" type="number" id="lotteryNo" />
+        <br />
+        <label data-region="getIthWinningTicket" for="i">i:</label>
+        <input data-region="getIthWinningTicket" type="number" id="i" />
+        <br />
+        <button id="getIthWinningTicket">Get Ith winning ticket</button>
+        <p id="getIthWinningTicketOutput"></p>
+      </div>
+      <div>
+        <label data-region="checkIfMyTicketWon" for="lotteryNo"
+          >Lottery number:</label
+        >
+        <input data-region="checkIfMyTicketWon" type="number" id="lotteryNo" />
+        <br />
+        <label data-region="checkIfMyTicketWon" for="ticketNo"
+          >Ticket number:</label
+        >
+        <input data-region="checkIfMyTicketWon" type="number" id="ticketNo" />
+        <br />
+        <button id="checkIfMyTicketWon">Check if my ticket won</button>
+        <p id="checkIfMyTicketWonOutput"></p>
+      </div>
+      <div>
+        <label data-region="checkIfAddrTicketWon" for="address">Address:</label>
+        <input data-region="checkIfAddrTicketWon" type="text" id="address" />
+        <br />
+        <label data-region="checkIfAddrTicketWon" for="lotteryNo"
+          >Lottery number:</label
+        >
+        <input
+          data-region="checkIfAddrTicketWon"
+          type="number"
+          id="lotteryNo"
+        />
+        <br />
+        <label data-region="checkIfAddrTicketWon" for="ticketNo"
+          >Ticket number:</label
+        >
+        <input data-region="checkIfAddrTicketWon" type="number" id="ticketNo" />
+        <br />
+        <button id="checkIfAddrTicketWon">Check if address ticket won</button>
+        <p id="checkIfAddrTicketWonOutput"></p>
+      </div>
+      <div>
+        <label data-region="withdrawTicketRefund" for="lotteryNo"
+          >Lottery number:</label
+        >
+        <input
+          data-region="withdrawTicketRefund"
+          type="number"
+          id="lotteryNo"
+        />
+        <br />
+        <label data-region="withdrawTicketRefund" for="startTicketNo"
+          >Starting ticket number:</label
+        >
+        <input
+          data-region="withdrawTicketRefund"
+          type="number"
+          id="startTicketNo"
+        />
+        <br />
+        <button id="withdrawTicketRefund">Withdraw ticket refund</button>
+        <p id="withdrawTicketRefundOutput"></p>
+      </div>
+    </div>
+
+    <!-- OwnershipFacet Section -->
+    <div class="region" id="ownershipFacet">
+      <h2>OwnershipFacet</h2>
+      <div>
+        <label for="paymentTokenAddress">Payment token address:</label>
+        <input type="text" id="paymentTokenAddress" />
+        <br />
+        <button id="setPaymentToken">Set Payment Token</button>
+        <p id="setPaymentTokenOutput"></p>
+      </div>
+      <div>
+        <label for="endTime">End Time:</label>
+        <input type="number" id="endTime" />
+        <br />
+        <label for="ticketsIssued">Number of Tickets:</label>
+        <input type="number" id="ticketsIssued" />
+        <br />
+        <label for="numberOfWinners">Number of Winners:</label>
+        <input type="number" id="numberOfWinners" />
+        <br />
+        <label for="minPercentage">Minimum Percentage:</label>
+        <input type="number" id="minPercentage" />
+        <br />
+        <label for="ticketPrice">Ticket Price:</label>
+        <input type="number" id="ticketPrice" />
+        <br />
+        <label for="htmlHash">HTML Hash:</label>
+        <input type="text" id="htmlHash" />
+        <br />
+        <label for="url">URL:</label>
+        <input type="text" id="url" />
+        <br />
+        <button id="createLottery">Create Lottery</button>
+        <p id="createLotteryOutput"></p>
+      </div>
+      <div>
+        <label data-region="finalizeLottery" for="lotteryNo"
+          >Lottery number:</label
+        >
+        <input data-region="finalizeLottery" type="number" id="lotteryNo" />
+        <br />
+        <button id="finalizeLottery">Finalize lottery</button>
+        <p id="finalizeLotteryOutput"></p>
+      </div>
+      <div>
+        <label data-region="withdrawTicketProceeds" for="lotteryNo"
+          >Lottery number:</label
+        >
+        <input
+          data-region="withdrawTicketProceeds"
+          type="number"
+          id="lotteryNo"
+        />
+        <br />
+        <button id="withdrawTicketProceeds">Withdraw ticket proceeds</button>
+        <p id="withdrawTicketProceedsOutput"></p>
+      </div>
+    </div>
+
+    <script src="bundle-sepolia.js" type="module"></script>
+  </body>
+</html>
